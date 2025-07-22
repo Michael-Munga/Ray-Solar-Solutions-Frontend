@@ -9,11 +9,11 @@ import Footer from "./Footer";
 export default function Customer() {
   return (
     <div>
-      <Navbar />
-      <Hero />
-      <ProductShowcase />
-      <Features />
-      <Footer />
+      <Navbar/>
+      <Hero/>
+      <ProductShowcase/>
+      <Features/>
+      <Footer/>
     </div>
   );
 }
