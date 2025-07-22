@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button";
-import "./index.css";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
+import './index.css';
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button className= "text-blue-800">Click me</Button>
-    </div>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 
