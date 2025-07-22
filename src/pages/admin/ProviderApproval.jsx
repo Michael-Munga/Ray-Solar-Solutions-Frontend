@@ -40,7 +40,7 @@ function ProviderApproval() {
   };
 
   const confirmAction = () => {
-    // In a real app, send API request here to update provider status
+    // api request
     if (!selectedProvider) return;
 
     let newStatus;

@@ -44,7 +44,7 @@ function UserManagement() {
   };
 
   const confirmAction = () => {
-    // In a real app, send API request here
+    // api request
     if (!selectedUser) return;
 
     let updatedUsers = [...users];

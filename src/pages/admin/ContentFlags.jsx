@@ -18,7 +18,7 @@ function ContentFlagged() {
   };
 
   const handleAction = (id, actionType) => {
-    // In a real app, send API request here
+    // api request
     const updatedItems = flaggedItems.map(item =>
       item.id === id ? { ...item, status: actionType === 'resolve' ? 'Resolved' : 'Dismissed' } : item
     );

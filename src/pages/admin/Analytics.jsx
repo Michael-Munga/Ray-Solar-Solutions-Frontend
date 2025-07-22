@@ -8,7 +8,7 @@ function Analytics() {
         <p className="text-gray-700 mb-6">This page displays key metrics and trends in a simplified manner.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {/* Example Metric Card */}
+          {/*  Metric Car*/}
           <div className="bg-blue-50 p-6 rounded-lg shadow-sm border border-blue-200">
             <h3 className="text-lg font-medium text-blue-800 mb-2">Total New Users (Last 30 Days)</h3>
             <p className="text-4xl font-bold text-blue-600">85</p>
@@ -24,7 +24,7 @@ function Analytics() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Placeholder for User Growth Chart */}
+          {/*  User Growth Chart */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-700 mb-4">User Growth Trend</h3>
             <div className="h-64 flex items-center justify-center text-gray-400 bg-gray-50 rounded">
@@ -33,7 +33,7 @@ function Analytics() {
             <p className="text-sm text-gray-500 mt-4">Shows new user registrations over time.</p>
           </div>
 
-          {/* Placeholder for Product Status Distribution Chart */}
+          {/*  Product Status Distribution Chart */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-700 mb-4">Product Status Distribution</h3>
             <div className="h-64 flex items-center justify-center text-gray-400 bg-gray-50 rounded">
@@ -42,7 +42,7 @@ function Analytics() {
             <p className="text-sm text-gray-500 mt-4">Breakdown of products by moderation status.</p>
           </div>
 
-          {/* Placeholder for Ticket Status Breakdown */}
+          {/*  Ticket Status Breakdown */}
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-700 mb-4">Ticket Status Breakdown</h3>
             <div className="h-64 flex items-center justify-center text-gray-400 bg-gray-50 rounded">

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react'; // For modal close icon
 
 function Escalation() {
-  // Dummy Data for Escalated Cases
+  // Dummy Data 
   const [escalatedCases, setEscalatedCases] = useState([
     { id: 101, subject: 'Critical system outage affecting solar monitoring', reporter: 'SysAdmin', status: 'In Progress', priority: 'High', date: '2025-07-21' },
     { id: 102, subject: 'Legal dispute with Provider "GreenEnergy Co."', reporter: 'Legal Dept', status: 'Pending Review', priority: 'Critical', date: '2025-07-20' },
@@ -18,7 +18,7 @@ function Escalation() {
   };
 
   const handleAction = (id, actionType) => {
-    // In a real app, send API request here
+    // api request
     const updatedCases = escalatedCases.map(caseItem =>
       caseItem.id === id ? { ...caseItem, status: actionType === 'resolve' ? 'Resolved' : 'Closed' } : caseItem
     );
@@ -83,7 +83,7 @@ function Escalation() {
         </div>
       </div>
 
-      {/* Basic Modal Implementation */}
+      
       {isModalOpen && selectedCase && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto overflow-hidden">
@@ -100,7 +100,7 @@ function Escalation() {
               <p><strong>Status:</strong> {selectedCase.status}</p>
               <p><strong>Priority:</strong> {selectedCase.priority}</p>
               <p><strong>Date:</strong> {selectedCase.date}</p>
-              {/* Add more case details like description, internal notes etc. */}
+              
             </div>
             <div className="p-4 border-t flex justify-end space-x-2">
               <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Close</button>

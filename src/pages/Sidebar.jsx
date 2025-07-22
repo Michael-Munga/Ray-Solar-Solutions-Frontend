@@ -9,7 +9,7 @@ import {
   AlertTriangle,
   BarChart2,
 } from 'lucide-react';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/admin_panel_logo.png';
 
 const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: Home },

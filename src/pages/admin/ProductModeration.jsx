@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react'; // For modal close icon
+import { X } from 'lucide-react'; 
 
 function ProductModeration() {
   // Dummy Data for Products
@@ -36,7 +36,7 @@ function ProductModeration() {
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
-    setEditedProduct({ ...product }); // Copy for editing
+    setEditedProduct({ ...product });
     setActionType('edit');
     setIsModalOpen(true);
   };
@@ -131,7 +131,7 @@ function ProductModeration() {
         </div>
       </div>
 
-      {/* Basic Modal Implementation */}
+      
       {isModalOpen && selectedProduct && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto overflow-hidden">
