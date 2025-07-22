@@ -1,3 +1,4 @@
+import Features from "./components/CustomerComponents/Features";
 import Hero from "./components/CustomerComponents/Hero";
 import Navbar from "./components/CustomerComponents/Navbar";
 import ProductShowcase from "./components/CustomerComponents/ProductShowcase";
@@ -7,7 +8,8 @@ function App() {
     <div>
       <Navbar />
       <Hero />
-      <ProductShowcase/>
+      <ProductShowcase />
+      <Features/>
     </div>
   );
 }
