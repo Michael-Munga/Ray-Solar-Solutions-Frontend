@@ -1,18 +1,9 @@
-
-import Features from "./components/CustomerComponents/Features";
-import Footer from "./components/CustomerComponents/Footer";
-import Hero from "./components/CustomerComponents/Hero";
-import Navbar from "./components/CustomerComponents/Navbar";
-import ProductShowcase from "./components/CustomerComponents/ProductShowcase";
+import Customer from "./components/CustomerComponents/Customer";
 
 function App() {
   return (
     <div>
-      <Navbar />
-      <Hero />
-      <ProductShowcase />
-      <Features />
-      <Footer/>
+      <Customer />
     </div>
   );
 }
