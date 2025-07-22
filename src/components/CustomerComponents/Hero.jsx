@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Leaf, Sun, Users } from "lucide-react";
-import heroImage from "@/assets/home-solar.jpg";
+// import heroImage from "@/assets/home-solar.jpg";
 
 const Hero = () => {
   return (
@@ -8,11 +8,13 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src={heroImage}
+          src={
+            "https://media.istockphoto.com/id/1404155913/photo/solar-panel-with-blue-sky-and-sunset-concept-clean-energy-electric-alternative-power-in-nature.jpg?s=612x612&w=0&k=20&c=Sb7CMioifzg2JEFm1CP5z8YoS6gGsdkX0y0n8ZOwsgo="
+          }
           alt="Rooftop solar panels during sunset"
           className="w-full h-full object-cover opacity-85"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
       </div>
 
       {/* Content */}
