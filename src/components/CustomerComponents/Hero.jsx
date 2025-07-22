@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img
           src={
-            "https://media.istockphoto.com/id/1404155913/photo/solar-panel-with-blue-sky-and-sunset-concept-clean-energy-electric-alternative-power-in-nature.jpg?s=612x612&w=0&k=20&c=Sb7CMioifzg2JEFm1CP5z8YoS6gGsdkX0y0n8ZOwsgo="
+            "https://i.pinimg.com/1200x/71/9b/85/719b85c0545eb51e2f79679a8f1057eb.jpg"
           }
           alt="Rooftop solar panels during sunset"
           className="w-full h-full object-cover opacity-85"
