@@ -1,3 +1,4 @@
+ provider-hakeem
 // src/App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -70,6 +71,17 @@ function App() {
           </main>
         </div>
       </div>
+
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
+import './index.css';
+
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
+ dev
     </Router>
   );
 }
