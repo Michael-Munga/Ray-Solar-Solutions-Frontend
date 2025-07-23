@@ -9,7 +9,7 @@ const dummyUsers = [
   {
     id: 1,
     name: 'Alice Wanjiku',
-    email: 'alice@example.com',
+    email: 'alice@gmail.com',
     phone: '+254700000001',
     nationalId: '12345678',
     address: 'Nairobi, Kenya',
@@ -19,7 +19,7 @@ const dummyUsers = [
   {
     id: 2,
     name: 'Brian Otieno',
-    email: 'brian@example.com',
+    email: 'brian@gmail.com',
     phone: '+254700000002',
     nationalId: '23456789',
     address: 'Mombasa, Kenya',
@@ -29,7 +29,7 @@ const dummyUsers = [
   {
     id: 3,
     name: 'Caroline Nduta',
-    email: 'caroline@example.com',
+    email: 'caroline@gmail.com',
     phone: '+254700000003',
     nationalId: '34567890',
     address: 'Kisumu, Kenya',
