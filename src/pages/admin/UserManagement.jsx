@@ -1,193 +1,113 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react'; // For modal close icon
+import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 
-function UserManagement() {
-  // Dummy Data for Users
-  const [users, setUsers] = useState([
-    { id: 1, username: 'admin_user', email: 'admin@solar.com', role: 'Admin', status: 'Active', lastLogin: '2025-07-22', registered: '2024-01-01' },
-    { id: 2, username: 'provider_alpha', email: 'alpha@provider.com', role: 'Provider', status: 'Active', lastLogin: '2025-07-21', registered: '2024-03-10' },
-    { id: 3, username: 'customer_jane', email: 'jane@example.com', role: 'Customer', status: 'Active', lastLogin: '2025-07-22', registered: '2024-05-15' },
-    { id: 4, username: 'inactive_user', email: 'inactive@example.com', role: 'Customer', status: 'Inactive', lastLogin: '2025-06-01', registered: '2024-02-20' },
-    { id: 5, username: 'provider_beta', email: 'beta@provider.com', role: 'Provider', status: 'Pending Approval', lastLogin: null, registered: '2025-07-21' },
-  ]);
+const dummyUsers = [
+  {
+    id: 1,
+    name: 'Jane Doe',
+    email: 'jane@solar.com',
+    role: 'customer',
+    status: 'active',
+    phone: '0700123456',
+  },
+  {
+    id: 2,
+    name: 'John Provider',
+    email: 'john@solar.com',
+    role: 'provider',
+    status: 'inactive',
+    phone: '0711223344',
+  },
+  {
+    id: 3,
+    name: 'Admin User',
+    email: 'admin@solar.com',
+    role: 'admin',
+    status: 'active',
+    phone: '0799887766',
+  },
+];
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [actionType, setActionType] = useState(null); // 'view', 'edit', 'toggle_status', 'reset_password'
-  const [editedUser, setEditedUser] = useState(null);
+const statusColor = {
+  active: 'bg-green-100 text-green-800',
+  inactive: 'bg-red-100 text-red-800',
+};
 
-  const handleViewDetails = (user) => {
-    setSelectedUser(user);
-    setActionType('view');
-    setIsModalOpen(true);
+export default function UserManagement() {
+  const [users, setUsers] = useState(dummyUsers);
+
+  const handleRoleChange = (id, newRole) => {
+    setUsers(users.map(user => user.id === id ? { ...user, role: newRole } : user));
   };
 
-  const handleEditClick = (user) => {
-    setSelectedUser(user);
-    setEditedUser({ ...user }); // Copy for editing
-    setActionType('edit');
-    setIsModalOpen(true);
-  };
-
-  const handleToggleStatus = (user) => {
-    setSelectedUser(user);
-    setActionType('toggle_status');
-    setIsModalOpen(true);
-  };
-
-  const handleEditChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setEditedUser(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const confirmAction = () => {
-    // api request
-    if (!selectedUser) return;
-
-    let updatedUsers = [...users];
-    let message = "";
-
-    if (actionType === 'edit' && editedUser) {
-      updatedUsers = updatedUsers.map(u => u.id === editedUser.id ? editedUser : u);
-      message = `User '${editedUser.username}' updated!`;
-    } else if (actionType === 'toggle_status') {
-      const newStatus = selectedUser.status === 'Active' ? 'Inactive' : 'Active';
-      updatedUsers = updatedUsers.map(u => u.id === selectedUser.id ? { ...u, status: newStatus } : u);
-      message = `User '${selectedUser.username}' status changed to ${newStatus}!`;
-    } else if (actionType === 'reset_password') {
-      message = `Password reset for '${selectedUser.username}' (Simulated: email sent)!`;
-    } else {
-      return;
-    }
-
-    setUsers(updatedUsers);
-    setIsModalOpen(false);
-    setSelectedUser(null);
-    setEditedUser(null);
-    alert(message);
+  const handleStatusChange = (id, newStatus) => {
+    setUsers(users.map(user => user.id === id ? { ...user, status: newStatus } : user));
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Management</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.username}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.role}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {user.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.lastLogin || 'N/A'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button onClick={() => handleViewDetails(user)} className="text-blue-600 hover:text-blue-900 mr-2">View</button>
-                    <button onClick={() => handleEditClick(user)} className="text-purple-600 hover:text-purple-900 mr-2">Edit</button>
-                    {user.status === 'Active' ? (
-                      <button onClick={() => handleToggleStatus(user)} className="text-orange-600 hover:text-orange-900">Deactivate</button>
-                    ) : (
-                      <button onClick={() => handleToggleStatus(user)} className="text-green-600 hover:text-green-900">Activate</button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className="p-6 space-y-4">
+      <h1 className="text-2xl font-bold mb-4">User Management</h1>
 
-      {/* Basic Modal Implementation */}
-      {isModalOpen && selectedUser && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto overflow-hidden">
-            <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="text-xl font-semibold text-gray-800">
-                {actionType === 'view' ? 'User Details' :
-                 actionType === 'edit' ? 'Edit User' :
-                 actionType === 'toggle_status' ? 'Change User Status' : 'Action'}
-              </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">
-                <X size={24} />
-              </button>
-            </div>
-            <div className="p-4">
-              {actionType === 'view' && (
-                <>
-                  <p><strong>Username:</strong> {selectedUser.username}</p>
-                  <p><strong>Email:</strong> {selectedUser.email}</p>
-                  <p><strong>Role:</strong> {selectedUser.role}</p>
-                  <p><strong>Status:</strong> {selectedUser.status}</p>
-                  <p><strong>Last Login:</strong> {selectedUser.lastLogin || 'N/A'}</p>
-                  <p><strong>Registered:</strong> {selectedUser.registered}</p>
-                </>
-              )}
-              {actionType === 'edit' && editedUser && (
-                <form>
-                  <div className="mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Username</label>
-                    <input type="text" name="username" value={editedUser.username} onChange={handleEditChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {users.map(user => (
+          <Card key={user.id} className="p-4 shadow-sm border rounded-xl">
+            <CardContent className="space-y-2">
+              <div className="text-lg font-semibold">{user.name}</div>
+              <div className="text-sm text-gray-500">{user.email}</div>
+              <div className="text-sm text-gray-500">Phone: {user.phone}</div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium">Role:</span>
+                <Select value={user.role} onValueChange={(val) => handleRoleChange(user.id, val)}>
+                  <SelectTrigger className="w-[120px] text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="customer">Customer</SelectItem>
+                    <SelectItem value="provider">Provider</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium">Status:</span>
+                <Select value={user.status} onValueChange={(val) => handleStatusChange(user.id, val)}>
+                  <SelectTrigger className="w-[120px] text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="sm" variant="outline" className="mt-2 text-xs">View Details</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>{user.name}'s Details</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-2 text-sm">
+                    <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Phone:</strong> {user.phone}</p>
+                    <p><strong>Role:</strong> {user.role}</p>
+                    <p><strong>Status:</strong> <Badge className={statusColor[user.status]}>{user.status}</Badge></p>
                   </div>
-                  <div className="mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" value={editedUser.email} onChange={handleEditChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                  </div>
-                  <div className="mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Role</label>
-                    <select name="role" value={editedUser.role} onChange={handleEditChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                      <option value="Admin">Admin</option>
-                      <option value="Provider">Provider</option>
-                      <option value="Customer">Customer</option>
-                    </select>
-                  </div>
-                  <div className="mb-2">
-                    <label className="block text-sm font-medium text-gray-700">Status</label>
-                    <select name="status" value={editedUser.status} onChange={handleEditChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                      <option value="Pending Approval">Pending Approval</option> {/* For new providers */}
-                    </select>
-                  </div>
-                </form>
-              )}
-              {actionType === 'toggle_status' && (
-                <p>Are you sure you want to change the status of **{selectedUser.username}** to **{selectedUser.status === 'Active' ? 'Inactive' : 'Active'}**?</p>
-              )}
-            </div>
-            <div className="p-4 border-t flex justify-end space-x-2">
-              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Cancel</button>
-              {(actionType === 'edit' || actionType === 'toggle_status') && (
-                <button onClick={confirmAction} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                  {actionType === 'edit' ? 'Save Changes' : 'Confirm'}
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+                </DialogContent>
+              </Dialog>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default UserManagement;
