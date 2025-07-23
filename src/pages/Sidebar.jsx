@@ -23,15 +23,15 @@ const navItems = [
 
 function Sidebar() {
   return (
-    <aside className="w-64 h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white flex flex-col items-center py-6 shadow-lg shadow-blue-500/10">
+    <aside className="w-64 h-screen bg-gradient-to-b from-yellow-100 via-orange-200 to-yellow-50 text-gray-800 flex flex-col items-center py-6 shadow-xl shadow-yellow-400/40">
       {/* Logo and Title */}
       <div className="flex flex-col items-center mb-8">
         <img
           src={logo}
           alt="Admin"
-          className="w-24 h-24 rounded-full object-cover border-4 border-blue-500 shadow-[0_0_20px_#3b82f6]"
+          className="w-24 h-24 rounded-full object-cover border-4 border-yellow-500 shadow-[0_0_20px_#facc15]"
         />
-        <h2 className="mt-3 text-xl font-semibold tracking-wide text-blue-400 drop-shadow-[0_0_5px_#3b82f6]">
+        <h2 className="mt-3 text-xl font-semibold tracking-wide text-yellow-600 drop-shadow-[0_0_5px_#facc15]">
           Admin Panel
         </h2>
       </div>
@@ -46,8 +46,8 @@ function Sidebar() {
                 className={({ isActive }) =>
                   `flex items-center p-3 rounded transition duration-200 ease-in-out ${
                     isActive
-                      ? 'bg-blue-600/30 text-blue-400 border-l-4 border-blue-500 shadow-inner shadow-blue-500/30'
-                      : 'hover:bg-white/10 hover:text-blue-300'
+                      ? 'bg-yellow-300/40 text-yellow-700 border-l-4 border-yellow-500 shadow-inner shadow-yellow-300/40'
+                      : 'hover:bg-yellow-100 hover:text-yellow-800'
                   }`
                 }
               >
@@ -60,9 +60,12 @@ function Sidebar() {
       </nav>
 
       {/* Bottom Glow Strip */}
-      <div className="w-full h-1 mt-auto bg-blue-500 shadow-[0_0_10px_#3b82f6]" />
+      <div className="w-full h-1 mt-auto bg-yellow-400 shadow-[0_0_10px_#facc15]" />
     </aside>
   );
 }
 
 export default Sidebar;
+
+
+
