@@ -172,4 +172,3 @@ const Escalation = () => {
 };
 
 export default Escalation;
-
