@@ -13,6 +13,7 @@ import Analytics from '../pages/admin/Analytics';
 function AppRoutes() {
   return (
     <Routes>
+      {/* All admin-related routes are nested under AdminLayout */}
       <Route path="/" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
@@ -24,7 +25,7 @@ function AppRoutes() {
         <Route path="analytics" element={<Analytics />} />
       </Route>
 
-      
+      {/* Fallback route in case of unknown URL */}
       <Route path="*" element={<Dashboard />} />
     </Routes>
   );

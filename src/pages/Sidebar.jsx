@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Home,
   Users,
@@ -8,6 +8,7 @@ import {
   Flag,
   AlertTriangle,
   BarChart2,
+  LogOut,
 } from 'lucide-react';
 import logo from '../assets/admin_panel_logo.png';
 
@@ -22,6 +23,13 @@ const navItems = [
 ];
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // clear any stored auth tokens here if needed
+    navigate('/login'); // redirect to login page
+  };
+
   return (
     <aside className="w-64 h-screen bg-gradient-to-b from-yellow-100 via-orange-200 to-yellow-50 text-gray-800 flex flex-col items-center py-6 shadow-xl shadow-yellow-400/40">
       {/* Logo and Title */}
@@ -37,7 +45,7 @@ function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="w-full px-4">
+      <nav className="w-full px-4 flex-1">
         <ul className="space-y-2">
           {navItems.map((item) => (
             <li key={item.path}>
@@ -59,13 +67,23 @@ function Sidebar() {
         </ul>
       </nav>
 
+      {/* Logout Button */}
+      <div className="w-full px-4 mb-4">
+        <button
+          onClick={handleLogout}
+          className="flex items-center justify-center w-full p-3 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition duration-200 shadow hover:shadow-md"
+        >
+          <LogOut className="mr-2" size={20} />
+          Logout
+        </button>
+      </div>
+
       {/* Bottom Glow Strip */}
-      <div className="w-full h-1 mt-auto bg-yellow-400 shadow-[0_0_10px_#facc15]" />
+      <div className="w-full h-1 bg-yellow-400 shadow-[0_0_10px_#facc15]" />
     </aside>
   );
 }
 
 export default Sidebar;
-
 
 
