@@ -1,112 +1,129 @@
+// src/pages/UserManagement.jsx
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { User, Mail, Phone, BadgeCheck, MapPin, IdCard } from 'lucide-react';
 
 const dummyUsers = [
   {
     id: 1,
-    name: 'Jane Doe',
-    email: 'jane@solar.com',
-    role: 'customer',
-    status: 'active',
-    phone: '0700123456',
+    name: 'Alice Wanjiku',
+    email: 'alice@example.com',
+    phone: '+254700000001',
+    nationalId: '12345678',
+    address: 'Nairobi, Kenya',
+    role: 'Admin',
+    status: 'Active',
   },
   {
     id: 2,
-    name: 'John Provider',
-    email: 'john@solar.com',
-    role: 'provider',
-    status: 'inactive',
-    phone: '0711223344',
+    name: 'Brian Otieno',
+    email: 'brian@example.com',
+    phone: '+254700000002',
+    nationalId: '23456789',
+    address: 'Mombasa, Kenya',
+    role: 'Provider',
+    status: 'Inactive',
   },
   {
     id: 3,
-    name: 'Admin User',
-    email: 'admin@solar.com',
-    role: 'admin',
-    status: 'active',
-    phone: '0799887766',
+    name: 'Caroline Nduta',
+    email: 'caroline@example.com',
+    phone: '+254700000003',
+    nationalId: '34567890',
+    address: 'Kisumu, Kenya',
+    role: 'Customer',
+    status: 'Active',
   },
 ];
 
-const statusColor = {
-  active: 'bg-green-100 text-green-800',
-  inactive: 'bg-red-100 text-red-800',
-};
-
 export default function UserManagement() {
-  const [users, setUsers] = useState(dummyUsers);
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleRoleChange = (id, newRole) => {
-    setUsers(users.map(user => user.id === id ? { ...user, role: newRole } : user));
-  };
-
-  const handleStatusChange = (id, newStatus) => {
-    setUsers(users.map(user => user.id === id ? { ...user, status: newStatus } : user));
-  };
+  const openUserModal = (user) => setSelectedUser(user);
+  const closeModal = () => setSelectedUser(null);
 
   return (
-    <div className="p-6 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">User Management</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {users.map(user => (
-          <Card key={user.id} className="p-4 shadow-sm border rounded-xl">
-            <CardContent className="space-y-2">
-              <div className="text-lg font-semibold">{user.name}</div>
-              <div className="text-sm text-gray-500">{user.email}</div>
-              <div className="text-sm text-gray-500">Phone: {user.phone}</div>
-
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">Role:</span>
-                <Select value={user.role} onValueChange={(val) => handleRoleChange(user.id, val)}>
-                  <SelectTrigger className="w-[120px] text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="customer">Customer</SelectItem>
-                    <SelectItem value="provider">Provider</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-6 text-yellow-600">User Management</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {dummyUsers.map((user) => (
+          <Card
+            key={user.id}
+            className="rounded-2xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100"
+          >
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center gap-2 text-lg font-semibold text-gray-800">
+                <User className="w-5 h-5 text-yellow-600" /> {user.name}
               </div>
-
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">Status:</span>
-                <Select value={user.status} onValueChange={(val) => handleStatusChange(user.id, val)}>
-                  <SelectTrigger className="w-[120px] text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Mail className="w-4 h-4" /> {user.email}
               </div>
-
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button size="sm" variant="outline" className="mt-2 text-xs">View Details</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>{user.name}'s Details</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-2 text-sm">
-                    <p><strong>Email:</strong> {user.email}</p>
-                    <p><strong>Phone:</strong> {user.phone}</p>
-                    <p><strong>Role:</strong> {user.role}</p>
-                    <p><strong>Status:</strong> <Badge className={statusColor[user.status]}>{user.status}</Badge></p>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <BadgeCheck className="w-4 h-4 text-green-500" /> Role: {user.role}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                    user.status === 'Active'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}
+                >
+                  {user.status}
+                </span>
+              </div>
+              <Button
+                onClick={() => openUserModal(user)}
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white"
+              >
+                View Details
+              </Button>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      <Dialog open={!!selectedUser} onOpenChange={closeModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-yellow-600">
+              {selectedUser?.name}'s Details
+            </DialogTitle>
+          </DialogHeader>
+          {selectedUser && (
+            <div className="space-y-3 text-sm text-gray-700">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-gray-500" /> {selectedUser.email}
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-gray-500" /> {selectedUser.phone}
+              </div>
+              <div className="flex items-center gap-2">
+                <IdCard className="w-4 h-4 text-gray-500" /> ID: {selectedUser.nationalId}
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-gray-500" /> {selectedUser.address}
+              </div>
+              <div className="flex items-center gap-2">
+                <BadgeCheck className="w-4 h-4 text-gray-500" /> Role: {selectedUser.role}
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                    selectedUser.status === 'Active'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}
+                >
+                  Status: {selectedUser.status}
+                </span>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
