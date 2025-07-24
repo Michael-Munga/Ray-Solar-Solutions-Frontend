@@ -1,13 +1,13 @@
+// src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppRoutes from './routes/AppRoutes';
-import './index.css';
+import ProductShowcase from './components/CustomerComponents/ProductShowcase';
+
 
 function App() {
   return (
-    <Router>
-      <AppRoutes />
-    </Router>
+    <div>
+      <ProductShowcase />
+    </div>
   );
 }
 
