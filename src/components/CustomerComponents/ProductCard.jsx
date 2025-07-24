@@ -32,8 +32,8 @@ const ProductCard = ({
       )}
 
       {/* Image */}
-      <CardHeader className="p-0">
-        <div className="relative overflow-hidden rounded-t-lg h-48">
+      <CardHeader>
+        <div className="relative overflow-hidden  rounded-lg h-48">
           <img
             src={image}
             alt={name}

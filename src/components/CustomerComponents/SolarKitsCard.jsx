@@ -16,7 +16,7 @@ export default function SolarKitsCard({ image, type, description }) {
       <Card className="flex flex-col rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
         {/* image */}
         <CardHeader>
-          <div className="relative overflow-hidden rounded-t-lg h-48">
+          <div className="relative overflow-hidden rounded-lg h-48">
             <img
               src={image}
               alt={type}

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ChooseUs() {
+export default function FriendlyInstallersSection() {
   return (
     <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between px-8 py-12 max-w-7xl mx-auto lg:gap-x-20">
       {/*  Text Content */}
@@ -45,7 +45,8 @@ export default function ChooseUs() {
       {/* Image */}
       <div className="relative lg:w-1/2 mt-10 lg:mt-0 self-center">
         <img
-          src="https://i.pinimg.com/1200x/be/bc/de/bebcde675b3711348c25aff3bb7ec95c.jpg"
+          src="https://i.pinimg.com/736x/a4/de/78/a4de7817f3e24cc8b5fabe43c56ec92e.jpg"
+          //   https://i.pinimg.com/1200x/c6/fc/2c/c6fc2cb34a8d31fa75f3a63e67878e8c.jpg
           //   https://i.pinimg.com/736x/c2/05/4e/c2054eb26c1a7cf9fc9679cdcb12d214.jpg
           alt="Solar Panel on Globe"
           className="rounded-xl shadow-lg w-full max-w-md mx-auto"
