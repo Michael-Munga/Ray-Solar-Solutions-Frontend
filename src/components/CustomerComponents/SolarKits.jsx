@@ -8,7 +8,7 @@ export default function SolarKits() {
       description:
         "These systems are designed for autonomous power generation and supply, operating independently of the public utility grid. They typically integrate solar panels with battery storage to provide electricity in areas without grid access or for applications requiring complete energy self-sufficiency.",
       image:
-        "https://i.pinimg.com/1200x/3e/55/05/3e550585dd60b5ce25328ab5ef140bd6.jpg",
+        "https://i.pinimg.com/1200x/b7/5e/c7/b75ec7f40b23c79e0cf63a7ce62d9caf.jpg",
     },
     {
       type: "On Grid",

@@ -6,6 +6,7 @@ import Hero from "./Hero";
 import Features from "./Features";
 import Footer from "./Footer";
 import SolarKits from "./SolarKits";
+import ChooseUs from "./ChooseUs";
 
 export default function Customer() {
   return (
@@ -14,6 +15,7 @@ export default function Customer() {
       <Hero />
       {/* <ProductShowcase /> */}
       <SolarKits />
+      <ChooseUs/>
       <Features />
       <Footer />
     </div>

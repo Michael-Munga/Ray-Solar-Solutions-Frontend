@@ -39,7 +39,12 @@ export default function SolarKitsCard({ image, type, description }) {
         </CardHeader>
 
         <CardFooter className="px-6 pb-6 pt-0">
-          <Button className="flex items-center text-blue-600 hover:text-blue-700 font-medium p-0 h-auto bg-transparent shadow-none hover:bg-transparent">
+          <Button
+            className="flex items-center text-yellow-500 hover:text-yellow-600 font-medium h-auto
+                     px-4 py-2 border border-yellow-500 hover:border-yellow-600 rounded-md
+                     bg-transparent shadow-none transition-colors duration-200 group"
+          >
+            {" "}
             View Products <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
         </CardFooter>
