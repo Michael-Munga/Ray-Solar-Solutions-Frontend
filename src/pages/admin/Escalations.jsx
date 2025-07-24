@@ -1,113 +1,166 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react'; // For modal close icon
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { X } from "lucide-react";
+
+// Dummy data
+const dummyEscalations = [
+  {
+    id: 1,
+    title: "Power Outage in Sector 5",
+    status: "Pending",
+    priority: "High",
+    description: "Residents in Sector 5 have reported a complete power outage affecting 45 homes.",
+  },
+  {
+    id: 2,
+    title: "Panel Malfunction - Ridge Estate",
+    status: "Resolved",
+    priority: "Medium",
+    description: "Several users reported malfunctioning solar panels in Ridge Estate.",
+  },
+  {
+    id: 3,
+    title: "Billing Discrepancy Complaint",
+    status: "In Progress",
+    priority: "Low",
+    description: "A customer raised an issue about incorrect billing for the last two months.",
+  },
+];
+
+// Utility functions for status and priority styling
+const getStatusBadge = (status) => {
+  switch (status) {
+    case "Pending":
+      return "bg-yellow-100 text-yellow-800";
+    case "Resolved":
+      return "bg-green-100 text-green-800";
+    case "In Progress":
+      return "bg-blue-100 text-blue-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
+const getPriorityColor = (priority) => {
+  switch (priority) {
+    case "High":
+      return "text-red-600";
+    case "Medium":
+      return "text-yellow-600";
+    case "Low":
+      return "text-green-600";
+    default:
+      return "text-gray-600";
+  }
+};
 
 function Escalation() {
-  // Dummy Data 
-  const [escalatedCases, setEscalatedCases] = useState([
-    { id: 101, subject: 'Critical system outage affecting solar monitoring', reporter: 'SysAdmin', status: 'In Progress', priority: 'High', date: '2025-07-21' },
-    { id: 102, subject: 'Legal dispute with Provider "GreenEnergy Co."', reporter: 'Legal Dept', status: 'Pending Review', priority: 'Critical', date: '2025-07-20' },
-    { id: 103, subject: 'Data breach concern from user personal info', reporter: 'Security', status: 'Resolved', priority: 'High', date: '2025-07-19' },
-  ]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState(null);
+  const [escalations, setEscalations] = useState(dummyEscalations);
 
-  const handleViewDetails = (caseItem) => {
-    setSelectedCase(caseItem);
-    setIsModalOpen(true);
-  };
+  const handleCloseModal = () => setSelectedCase(null);
 
-  const handleAction = (id, actionType) => {
-    // api request
-    const updatedCases = escalatedCases.map(caseItem =>
-      caseItem.id === id ? { ...caseItem, status: actionType === 'resolve' ? 'Resolved' : 'Closed' } : caseItem
+  const handleMarkResolved = (id) => {
+    const confirmed = window.confirm("Mark this case as resolved?");
+    if (!confirmed) return;
+
+    const updated = escalations.map((item) =>
+      item.id === id ? { ...item, status: "Resolved" } : item
     );
-    setEscalatedCases(updatedCases);
-    setIsModalOpen(false);
-    alert(`Case ${id} ${actionType}d! (Simulated)`);
+    setEscalations(updated);
+    setSelectedCase(null);
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Escalation Cases</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
+      <motion.h2
+        className="text-2xl font-bold mb-6 text-gray-800"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        Escalated Cases
+      </motion.h2>
+
+      {escalations.length === 0 ? (
+        <p className="text-gray-500 text-center">No escalation cases to display.</p>
+      ) : (
+        <div className="overflow-x-auto shadow rounded-lg border border-gray-200">
+          <table className="min-w-full bg-white divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reported By</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">Title</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {escalatedCases.map((caseItem) => (
-                <tr key={caseItem.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{caseItem.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 truncate max-w-xs">{caseItem.subject}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{caseItem.reporter}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      caseItem.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                      caseItem.status === 'Pending Review' ? 'bg-yellow-100 text-yellow-800' :
-                      caseItem.status === 'Resolved' ? 'bg-green-100 text-green-800' :
-                      'bg-gray-100 text-gray-800'
-                    }`}>
-                      {caseItem.status}
+            <tbody className="divide-y divide-gray-100">
+              {escalations.map((escalation) => (
+                <tr key={escalation.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 text-sm font-medium text-gray-800">
+                    {escalation.title}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(
+                        escalation.status
+                      )}`}
+                    >
+                      {escalation.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    <span className={`font-semibold ${
-                      caseItem.priority === 'Critical' ? 'text-red-600' :
-                      caseItem.priority === 'High' ? 'text-orange-600' :
-                      'text-gray-600'
-                    }`}>
-                      {caseItem.priority}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{caseItem.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button onClick={() => handleViewDetails(caseItem)} className="text-blue-600 hover:text-blue-900 mr-2">View</button>
-                    {caseItem.status !== 'Resolved' && (
-                      <button onClick={() => handleAction(caseItem.id, 'resolve')} className="text-green-600 hover:text-green-900">Resolve</button>
-                    )}
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => setSelectedCase(escalation)}
+                      className="text-indigo-600 hover:text-indigo-800 font-medium"
+                    >
+                      View
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+      )}
 
-      
-      {isModalOpen && selectedCase && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto overflow-hidden">
-            <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="text-xl font-semibold text-gray-800">Escalation Case Details</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">
-                <X size={24} />
+      {/* Modal */}
+      {selectedCase && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-md rounded-lg shadow-xl p-6 relative">
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <X size={20} />
+            </button>
+
+            <h3 className="text-xl font-semibold mb-3 text-gray-800">
+              {selectedCase.title}
+            </h3>
+            <p className="text-gray-700 mb-4">{selectedCase.description}</p>
+
+            <div className="flex items-center gap-4 mb-4">
+              <span
+                className={`text-sm px-2 py-1 rounded-full font-medium ${getStatusBadge(
+                  selectedCase.status
+                )}`}
+              >
+                {selectedCase.status}
+              </span>
+              <span className={`text-sm font-semibold ${getPriorityColor(selectedCase.priority)}`}>
+                Priority: {selectedCase.priority}
+              </span>
+            </div>
+
+            {selectedCase.status !== "Resolved" && (
+              <button
+                onClick={() => handleMarkResolved(selectedCase.id)}
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              >
+                Mark as Resolved
               </button>
-            </div>
-            <div className="p-4">
-              <p><strong>ID:</strong> {selectedCase.id}</p>
-              <p><strong>Subject:</strong> {selectedCase.subject}</p>
-              <p><strong>Reported By:</strong> {selectedCase.reporter}</p>
-              <p><strong>Status:</strong> {selectedCase.status}</p>
-              <p><strong>Priority:</strong> {selectedCase.priority}</p>
-              <p><strong>Date:</strong> {selectedCase.date}</p>
-              
-            </div>
-            <div className="p-4 border-t flex justify-end space-x-2">
-              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Close</button>
-              {selectedCase.status !== 'Resolved' && (
-                <button onClick={() => handleAction(selectedCase.id, 'resolve')} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Mark as Resolved</button>
-              )}
-            </div>
+            )}
           </div>
         </div>
       )}
