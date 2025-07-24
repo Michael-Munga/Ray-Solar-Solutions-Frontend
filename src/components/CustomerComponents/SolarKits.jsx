@@ -1,30 +1,34 @@
 import React from "react";
+import SolarKitsCard from "./SolarKitsCard";
 
 export default function SolarKits() {
-    const solarKits = [
-      {
-        type: "Off Grid",
-        description:
-          "These systems are designed for autonomous power generation and supply, operating independently of the public utility grid. They typically integrate solar panels with battery storage to provide electricity in areas without grid access or for applications requiring complete energy self-sufficiency.",
-        image: "",
-      },
-      {
-        type: "On Grid",
-        description:
-          "Grid-tied solar systems are interconnected with the existing electrical utility grid. They allow property owners to use solar-generated electricity, with any excess power being fed back into the grid, often under net metering arrangements. Grid power acts as a continuous backup.",
-        image: "",
-      },
-      {
-        type: "Hybrid",
-        description:
-          "Hybrid solar solutions combine grid connectivity with integrated battery storage. This configuration allows for optimized energy management, enabling self-consumption of solar power, providing backup during grid outages, and offering flexibility in managing energy flows between solar, battery, and the utility grid.",
-        image: "",
-      },
-    ];
+  const solarKits = [
+    {
+      type: "Off Grid",
+      description:
+        "These systems are designed for autonomous power generation and supply, operating independently of the public utility grid. They typically integrate solar panels with battery storage to provide electricity in areas without grid access or for applications requiring complete energy self-sufficiency.",
+      image:
+        "https://i.pinimg.com/1200x/3e/55/05/3e550585dd60b5ce25328ab5ef140bd6.jpg",
+    },
+    {
+      type: "On Grid",
+      description:
+        "Grid-tied solar systems are interconnected with the existing electrical utility grid. They allow property owners to use solar-generated electricity, with any excess power being fed back into the grid, often under net metering arrangements. Grid power acts as a continuous backup.",
+      image:
+        "https://i.pinimg.com/736x/67/c8/62/67c862cf6d0289ac7215d606aa40cba5.jpg",
+    },
+    {
+      type: "Hybrid",
+      description:
+        "Hybrid solar solutions combine grid connectivity with integrated battery storage. This configuration allows for optimized energy management, enabling self-consumption of solar power, providing backup during grid outages, and offering flexibility in managing energy flows between solar, battery, and the utility grid.",
+      image:
+        "https://i.pinimg.com/1200x/6f/e6/bb/6fe6bb7ce23ad80956bab10b57eea863.jpg",
+    },
+  ];
   return (
     <section className="py-20 bg-white">
-          <div>
-              {/* section header */}
+      <div>
+        {/* section header */}
         <div>
           <h1>Solar Kits</h1>
           <p>
@@ -32,6 +36,17 @@ export default function SolarKits() {
             to suppliment on-grid housing, a complete self-sustaining home or a
             combination of the two
           </p>
+        </div>
+        {/* solar kits grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {solarKits.map((kit) => (
+            <SolarKitsCard
+              key={kit.type}
+              image={kit.image}
+              type={kit.type}
+              description={kit.description}
+            />
+          ))}
         </div>
       </div>
     </section>
