@@ -3,8 +3,8 @@ import React from "react";
 export default function SolarKits() {
   return (
     <section className="py-20 bg-white">
-          <div>
-              {/* section header */}
+      <div>
+        {/* section header */}
         <div>
           <h1>Solar Kits</h1>
           <p>
