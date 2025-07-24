@@ -29,16 +29,18 @@ export default function SolarKits() {
     <section className="py-20 bg-white">
       <div>
         {/* section header */}
-        <div>
-          <h1>Solar Kits</h1>
-          <p>
+        <div className="text-center mb-16">
+          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-4">
+            Solar Kits
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Complete Solar system kits,ready for installation.They Can be used
-            to suppliment on-grid housing, a complete self-sustaining home or a
-            combination of the two
+            to suppliment <br /> on-grid housing, a complete self-sustaining
+            home or a combination of the two
           </p>
         </div>
         {/* solar kits grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl xl:max-w-7xl mx-auto">
           {solarKits.map((kit) => (
             <SolarKitsCard
               key={kit.type}
