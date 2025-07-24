@@ -8,11 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
+import { ArrowRight } from "lucide-react";
 
 export default function SolarKitsCard({ image, type, description }) {
   return (
     <div>
-      <Card>
+      <Card className="flex flex-col rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
         {/* image */}
         <CardHeader>
           <div className="relative overflow-hidden rounded-t-lg h-48">
@@ -24,17 +25,23 @@ export default function SolarKitsCard({ image, type, description }) {
           </div>
           {/* content */}
           <div>
-            <CardContent>
+            <CardContent className="p-6 flex-grow flex flex-col justify-between">
               <div>
-                <CardTitle>{type}</CardTitle>
-                <CardDescription>{description}</CardDescription>
+                <CardTitle className="text-xl font-semibold mb-2 text-gray-800">
+                  {type}
+                </CardTitle>
+                <CardDescription className="text-gray-600 leading-relaxed mb-4">
+                  {description}
+                </CardDescription>
               </div>
             </CardContent>
           </div>
         </CardHeader>
 
-        <CardFooter>
-          <Button />
+        <CardFooter className="px-6 pb-6 pt-0">
+          <Button className="flex items-center text-blue-600 hover:text-blue-700 font-medium p-0 h-auto bg-transparent shadow-none hover:bg-transparent">
+            View Products <ArrowRight className="ml-1 h-4 w-4" />
+          </Button>
         </CardFooter>
       </Card>
     </div>
