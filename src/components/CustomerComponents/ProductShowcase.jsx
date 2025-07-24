@@ -3,6 +3,8 @@ import solarGardenLights from "@/assets/solar-garden-lights.jpg";
 import solarStreetLight from "@/assets/solar-street-light.jpg";
 import solarLantern from "@/assets/solar-lantern.jpg";
 import solarHomeSystem from "@/assets/solar-home-system.jpg";
+import { Button } from "../ui/button";
+import { ArrowRight } from "lucide-react";
 
 const featuredProducts = [
   {
@@ -67,7 +69,7 @@ const featuredProducts = [
 const ProductShowcase = () => {
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -86,6 +88,20 @@ const ProductShowcase = () => {
               <ProductCard {...product} />
             </div>
           ))}
+        </div>
+        {/* View All Products Button */}
+        <div className="mt-16 text-center">
+          {" "}
+          <Button
+            className="inline-flex items-center
+             bg-yellow-500 text-white font-medium
+             px-6 py-3 border border-yellow-500 rounded-md
+             shadow-md transition-all duration-200 group
+             hover:bg-yellow-600 hover:border-yellow-600 hover:shadow-lg"
+          >
+            View All Products{" "}
+            <ArrowRight className="ml-2 h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1" />
+          </Button>
         </div>
       </div>
     </section>
