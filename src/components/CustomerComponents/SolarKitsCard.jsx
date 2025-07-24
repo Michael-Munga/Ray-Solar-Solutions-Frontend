@@ -38,7 +38,7 @@ export default function SolarKitsCard({ image, type, description }) {
           </div>
         </CardHeader>
 
-        <CardFooter className="px-6 pb-6 pt-0">
+        <CardFooter className="px-6 pb-6 pt-0 ">
           <Button
             className="flex items-center
              bg-yellow-500 text-white font-medium h-auto
