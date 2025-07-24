@@ -26,7 +26,7 @@ export default function SolarKits() {
     },
   ];
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-yellow-50/90 backdrop-blur-sm border-b border-yellow-200">
       <div>
         {/* section header */}
         <div className="text-center mb-16">
