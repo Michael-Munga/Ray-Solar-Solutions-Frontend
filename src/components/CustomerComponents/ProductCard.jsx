@@ -24,7 +24,7 @@ const ProductCard = ({
   warranty,
 }) => {
   return (
-    <Card className="bg-white/90 border border-amber-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col h-full">
+    <Card className="bg-white border border-amber-100 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col h-full relative">
       {isPopular && (
         <Badge className="absolute top-3 right-3 z-10 bg-amber-500 text-white">
           Popular
@@ -32,8 +32,8 @@ const ProductCard = ({
       )}
 
       {/* Image */}
-      <CardHeader>
-        <div className="relative overflow-hidden  rounded-lg h-48">
+      <CardHeader className="pb-0">
+        <div className="relative overflow-hidden rounded-lg h-48">
           <img
             src={image}
             alt={name}
@@ -44,24 +44,26 @@ const ProductCard = ({
 
       {/* Content */}
       <CardContent className="p-5 flex flex-col flex-grow">
+        {/* Title + Rating */}
         <div className="flex items-start justify-between mb-2">
-          <CardTitle className="text-lg font-semibold text-foreground">
+          <CardTitle className="text-lg font-bold text-gray-800 leading-snug">
             {name}
           </CardTitle>
           <div className="flex items-center space-x-1">
             <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-gray-500">
               {rating} ({reviewCount})
             </span>
           </div>
         </div>
 
-        <CardDescription className="text-sm text-muted-foreground mb-3 line-clamp-2">
+        {/* Description */}
+        <CardDescription className="text-sm text-gray-600 mb-3 line-clamp-2">
           {description}
         </CardDescription>
 
         {/* Quick Specs */}
-        <div className="grid grid-cols-3 gap-2 mb-3 text-xs text-muted-foreground">
+        <div className="grid grid-cols-3 gap-2 mb-3 text-xs text-gray-500">
           {wattage && (
             <div className="flex items-center gap-1">
               <Zap className="h-3 w-3 text-amber-500" />
@@ -96,7 +98,7 @@ const ProductCard = ({
           <span className="text-2xl font-bold text-amber-600">${price}</span>
           {originalPrice && (
             <>
-              <span className="text-lg text-muted-foreground line-through">
+              <span className="text-lg text-gray-400 line-through">
                 ${originalPrice}
               </span>
               <Badge variant="destructive" className="text-xs">
@@ -107,6 +109,7 @@ const ProductCard = ({
         </div>
       </CardContent>
 
+      {/* Optional Footer */}
       <CardFooter className="hidden" />
     </Card>
   );
