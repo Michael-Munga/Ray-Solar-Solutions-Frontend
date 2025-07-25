@@ -25,18 +25,19 @@ export default function SolarKits() {
         "https://i.pinimg.com/1200x/6f/e6/bb/6fe6bb7ce23ad80956bab10b57eea863.jpg",
     },
   ];
+
   return (
     <section className="py-20 bg-yellow-50/90 backdrop-blur-sm border-b border-yellow-200">
       <div>
         {/* section header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold text-yellow-500 mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-black mb-4">
             Solar Kits
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Complete Solar system kits,ready for installation.They Can be used
-            to suppliment <br /> on-grid housing, a complete self-sustaining
-            home or a combination of the two
+            Complete Solar system kits, ready for installation. They can be used
+            to supplement <br /> on-grid housing, a complete self-sustaining home
+            or a combination of the two.
           </p>
         </div>
         {/* solar kits grid */}
@@ -54,3 +55,4 @@ export default function SolarKits() {
     </section>
   );
 }
+

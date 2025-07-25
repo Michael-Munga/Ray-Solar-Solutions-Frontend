@@ -14,14 +14,14 @@ import { Input } from "@/components/ui/input";
 
 const Footer = () => {
   return (
-    <footer className=" bg-white">
+    <footer className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center space-x-2">
-              <Sun className="h-8 w-8 text-yellow-500" />
-              <span className="text-xl font-bold bg-gradient-solar bg-clip-text text-transparent">
+              <Sun className="h-8 w-8 text-[#0a9586]" />
+              <span className="text-xl font-bold text-[#0a9586]">
                 Ray Solar Solutions
               </span>
             </Link>
@@ -35,7 +35,7 @@ const Footer = () => {
                   key={idx}
                   variant="ghost"
                   size="sm"
-                  className="p-2 hover:text-yellow-500 transition-colors"
+                  className="p-2 hover:text-[#0a9586] transition-colors"
                 >
                   <Icon className="h-5 w-5" />
                 </Button>
@@ -45,7 +45,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-yellow-600 mb-4">
+            <h3 className="text-lg font-semibold text-[#0a9586] mb-4">
               Products
             </h3>
             <ul className="space-y-3">
@@ -58,7 +58,7 @@ const Footer = () => {
                 <li key={href}>
                   <Link
                     to={href}
-                    className="text-muted-foreground hover:text-yellow-500 transition-colors"
+                    className="text-muted-foreground hover:text-[#0a9586] transition-colors"
                   >
                     {label}
                   </Link>
@@ -69,7 +69,7 @@ const Footer = () => {
 
           {/* Company */}
           <div>
-            <h3 className="text-lg font-semibold text-yellow-600 mb-4">
+            <h3 className="text-lg font-semibold text-[#0a9586] mb-4">
               Company
             </h3>
             <ul className="space-y-3">
@@ -82,7 +82,7 @@ const Footer = () => {
                 <li key={href}>
                   <Link
                     to={href}
-                    className="text-muted-foreground hover:text-yellow-500 transition-colors"
+                    className="text-muted-foreground hover:text-[#0a9586] transition-colors"
                   >
                     {label}
                   </Link>
@@ -93,20 +93,20 @@ const Footer = () => {
 
           {/* Contact & Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold text-yellow-600 mb-4">
+            <h3 className="text-lg font-semibold text-[#0a9586] mb-4">
               Get in Touch
             </h3>
             <div className="space-y-3 mb-6">
               <div className="flex items-center space-x-3 text-muted-foreground">
-                <Mail className="h-4 w-4 text-yellow-500" />
+                <Mail className="h-4 w-4 text-[#0a9586]" />
                 <span className="text-sm">info@raysolarsolutions.com</span>
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
-                <Phone className="h-4 w-4 text-yellow-500" />
+                <Phone className="h-4 w-4 text-[#0a9586]" />
                 <span className="text-sm">+254 712 345 6781</span>
               </div>
               <div className="flex items-start space-x-3 text-muted-foreground">
-                <MapPin className="h-4 w-4 text-yellow-500 mt-0.5" />
+                <MapPin className="h-4 w-4 text-[#0a9586] mt-0.5" />
                 <span className="text-sm">
                   123 Solar Street, Green City, GC 12345
                 </span>
@@ -115,14 +115,14 @@ const Footer = () => {
 
             {/* Newsletter */}
             <div>
-              <h4 className="text-md font-medium text-yellow-600 mb-3">
+              <h4 className="text-md font-medium text-[#0a9586] mb-3">
                 Newsletter
               </h4>
               <div className="flex space-x-2">
                 <Input placeholder="Your email" className="flex-1" />
                 <Button
                   size="sm"
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold transition-colors"
+                  className="bg-[#0a9586] hover:bg-[#08756a] text-white font-semibold transition-colors"
                 >
                   Subscribe
                 </Button>
@@ -147,7 +147,7 @@ const Footer = () => {
                 <Link
                   key={href}
                   to={href}
-                  className="text-muted-foreground hover:text-yellow-500 transition-colors"
+                  className="text-muted-foreground hover:text-[#0a9586] transition-colors"
                 >
                   {label}
                 </Link>
@@ -161,3 +161,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

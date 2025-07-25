@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Leaf, Sun, Users } from "lucide-react";
-// import heroImage from "@/assets/home-solar.jpg";
 
 const Hero = () => {
   return (
@@ -8,9 +7,7 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src={
-            "https://i.pinimg.com/1200x/71/9b/85/719b85c0545eb51e2f79679a8f1057eb.jpg"
-          }
+          src="src/assets/upscalemedia-transformed.jpg"
           alt="Rooftop solar panels during sunset"
           className="w-full h-full object-cover opacity-85"
         />
@@ -18,10 +15,10 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-28 sm:py-32">
-        <div className="max-w-2xl space-y-8 ml-0 sm:ml-4 md:ml-10 lg:ml-16 animate-fade-in select-none">
+      <div className="relative z-10 max-w-7xl mx-auto py-28 sm:py-32">
+        <div className="max-w-2xl ml-6 sm:ml-10 md:ml-16 lg:ml-20 space-y-8 animate-fade-in select-none">
           {/* Green Sustainable Badge */}
-          <div className="inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full border border-green-200 font-medium text-sm shadow-sm animate-fade-in">
+          <div className="inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full border border-green-200 font-medium text-sm shadow-sm">
             <Leaf className="h-4 w-4" />
             <span>Sustainable Energy Solutions</span>
           </div>
@@ -29,7 +26,14 @@ const Hero = () => {
           {/* Headline */}
           <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight">
             Lighting the Future <br />
-            <span className="text-amber-400">One Roof at a Time</span>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+              }}
+            >
+              One Roof at a Time
+            </span>
           </h1>
 
           {/* Subtext */}
@@ -39,12 +43,15 @@ const Hero = () => {
             businesses, and communities with energy independence.
           </p>
 
-          {/*  Buttons */}
+          {/* Buttons */}
           <div className="flex flex-wrap gap-4 pt-2">
             {/* Explore Products */}
             <Button
               size="lg"
-              className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 text-base font-semibold shadow-md group"
+              className="text-white px-6 py-3 text-base font-semibold shadow-md group"
+              style={{
+                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+              }}
             >
               Explore Products
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -53,7 +60,10 @@ const Hero = () => {
             {/* Contact Us */}
             <Button
               size="lg"
-              className="bg-cyan-700 hover:bg-cyan-800 text-white px-6 py-3 text-base font-semibold flex items-center"
+              className="text-white px-6 py-3 text-base font-semibold flex items-center"
+              style={{
+                backgroundImage: "linear-gradient(to right, #0a9586 0%, #0a9586 100%)",
+              }}
             >
               <Phone className="h-5 w-5 mr-2" />
               Contact Us
@@ -91,3 +101,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
