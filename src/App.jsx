@@ -1,9 +1,9 @@
-import Customer from "./components/CustomerComponents/Customer";
 import { Toaster } from "sonner";
+import AppRoutes from "./routes/AppRoutes";
 function App() {
   return (
     <div>
-      <Customer />
+      <AppRoutes />
       <Toaster position="top-center" richColors />
     </div>
   );
