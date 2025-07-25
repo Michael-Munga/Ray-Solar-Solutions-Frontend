@@ -2,6 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import LoginForm from "./LoginForm";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+
+import { motion } from "framer-motion";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -96,16 +108,34 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
               ) : (
                 // Not Authenticated----> Show Sign In and Get Started
                 <>
-                  <Link to="/auth">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-2 border-yellow-400 text-yellow-800 hover:bg-yellow-100"
-                    >
-                      <User className="h-6 w-6" />
-                      Sign In
-                    </Button>
-                  </Link>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex items-center gap-2 border-yellow-400 text-yellow-800 hover:bg-yellow-100"
+                      >
+                        <User className="h-6 w-6" />
+                        Sign In
+                      </Button>
+                    </DialogTrigger>
+
+                    <DialogContent className="max-w-4xl">
+                      <DialogTitle className="sr-only">Sign In</DialogTitle>
+                      <DialogDescription className="sr-only">
+                        Log in to access your Ray Solar Solutions account
+                      </DialogDescription>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                      >
+                        <LoginForm />
+                      </motion.div>
+                    </DialogContent>
+                  </Dialog>
+
                   <Link to="/auth">
                     <Button
                       size="sm"
