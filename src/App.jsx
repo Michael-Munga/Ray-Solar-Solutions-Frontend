@@ -1,13 +1,13 @@
 // src/App.jsx
 import React from 'react';
-import ProductShowcase from './components/CustomerComponents/ProductShowcase';
-
+import { BrowserRouter } from 'react-router-dom';
+import CustomerRoutes from './routes/CustomerRoutes';
 
 function App() {
   return (
-    <div>
-      <ProductShowcase />
-    </div>
+    <BrowserRouter>
+      <CustomerRoutes />
+    </BrowserRouter>
   );
 }
 

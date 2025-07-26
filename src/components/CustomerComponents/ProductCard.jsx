@@ -22,9 +22,10 @@ const ProductCard = ({
   wattage,
   batteryLife,
   warranty,
+  onAddToCart,
 }) => {
   return (
-    <Card className="bg-white/90 border border-amber-100 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex flex-col h-full">
+    <Card className="bg-white/90 border border-amber-100 hover:shadow-xl hover:shadow-amber-400 hover:scale-[1.05] transition-all duration-300 ease-in-out flex flex-col h-full">
       {isPopular && (
         <Badge className="absolute top-3 right-3 z-10 bg-amber-500 text-white">
           Popular
@@ -107,7 +108,15 @@ const ProductCard = ({
         </div>
       </CardContent>
 
-      <CardFooter className="hidden" />
+      <CardFooter className="pt-0">
+        <button
+          className="w-full bg-amber-500 text-white py-2 rounded-md hover:bg-amber-600 transition-colors duration-300"
+          onClick={onAddToCart}
+          aria-label={`Add ${name} to cart`}
+        >
+          Add to Cart
+        </button>
+      </CardFooter>
     </Card>
   );
 };

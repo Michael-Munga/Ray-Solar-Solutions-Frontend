@@ -84,7 +84,7 @@ const ProductShowcase = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {featuredProducts.map((product, index) => (
-            <div key={index}>
+            <div key={index} className="group hover:shadow-lg hover:scale-[1.03] transition-all duration-300 ease-in-out rounded-lg">
               <ProductCard {...product} />
             </div>
           ))}
