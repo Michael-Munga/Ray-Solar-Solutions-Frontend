@@ -43,7 +43,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Products */}
           <div>
             <h3 className="text-lg font-semibold text-[#0a9586] mb-4">
               Products
@@ -161,4 +161,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

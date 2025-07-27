@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "@/components/CustomerComponents/Layout";
@@ -12,12 +13,21 @@ import UserManagement from "../pages/admin/UserManagement";
 import Analytics from "../pages/admin/Analytics";
 
 
+import { Routes, Route } from "react-router-dom";
+import Layout from "@/components/CustomerComponents/Layout";
+import Customer from "@/components/CustomerComponents/Customer";
+import AboutUs1 from "@/pages/customer/About";
+
+import React from "react";
+
+
 function AppRoutes({ user, signOut, handleSignIn }) {
   return (
     <Routes>
       {/* Customer layout route */}
       <Route element={<Layout user={user} signOut={signOut} handleSignIn={handleSignIn} />}>
         <Route path="/" element={<Customer />} />
+
       </Route>
 
       {/* Admin layout and protected routes */}
@@ -38,6 +48,11 @@ function AppRoutes({ user, signOut, handleSignIn }) {
 
       {/* Catch all */}
       <Route path="*" element={<Navigate to="/" replace />} />
+
+
+        <Route path="/about" element={<AboutUs1 />} />
+      </Route>
+
     </Routes>
   );
 }
