@@ -1,13 +1,32 @@
-
+import React, { useEffect, useState } from "react";
 import { Toaster } from "sonner";
-import React from 'react';
 import AppRoutes from "./routes/AppRoutes";
+
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleSignIn = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  const signOut = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   return (
-    <div>
-    <AppRoutes/>
-      <Toaster position="top-center" richColors />
-      </div>
+    <>
+      <Toaster />
+      <AppRoutes user={user} signOut={signOut} handleSignIn={handleSignIn} />
+    </>
   );
 }
 

@@ -18,15 +18,35 @@ const AdminLayout = () => {
   const location = useLocation();
   const pageTitle = getPageTitle(location.pathname);
 
+  // Theme colors
+  const mainGreen = '#145b52'; // Primary dark green
+  const headerBg = '#d7f7ec';  // Light mint green
+  const textColor = '#094d3b'; // Deep teal green
+  const pageBg = '#f0fdf9';    // Eco clean background
+
   return (
-    <div className="flex h-screen bg-solar-light">
+    <div className="flex h-screen" style={{ backgroundColor: pageBg }}>
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
-        <header className="bg-yellow-100/70 backdrop-blur-md shadow border-b-2 border-solar-dark p-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-yellow-900">{pageTitle}</h1>
+        {/* Top Header */}
+        <header
+          className="backdrop-blur-md shadow-md border-b p-4 flex items-center justify-between"
+          style={{
+            backgroundColor: headerBg,
+            borderColor: mainGreen,
+            boxShadow: '0 2px 8px rgba(20, 91, 82, 0.1)',
+          }}
+        >
+          <h1 className="text-2xl font-bold tracking-tight" style={{ color: textColor }}>
+            {pageTitle}
+          </h1>
         </header>
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-6 bg-solar-light">
+        {/* Main Content */}
+        <main
+          className="flex-1 overflow-x-hidden overflow-y-auto p-6"
+          style={{ backgroundColor: pageBg }}
+        >
           <Outlet />
         </main>
       </div>
