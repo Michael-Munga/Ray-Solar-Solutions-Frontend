@@ -47,7 +47,7 @@ const solarValues = [
   {
     title: "Integrity",
     description:
-      "We operate with transparency and hold ourselves accountable to the highest standards.",
+      "We operate with transparency and hold ourselves highly accountable.",
     icon: "ShieldCheck",
   },
 ];

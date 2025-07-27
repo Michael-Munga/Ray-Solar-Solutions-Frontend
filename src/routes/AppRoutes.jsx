@@ -1,7 +1,10 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import Layout from "@/components/CustomerComponents/Layout";
 import Customer from "@/components/CustomerComponents/Customer";
+import AboutPage from "@/pages/customer/about/AboutPage";
+
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import ContentFlagged from "../pages/admin/ContentFlags";
@@ -10,15 +13,28 @@ import ProductModeration from "../pages/admin/ProductModeration";
 import ProviderApproval from "../pages/admin/ProviderApproval";
 import UserManagement from "../pages/admin/UserManagement";
 import Analytics from "../pages/admin/Analytics";
+
+import ContactUs from "@/pages/customer/contact/ContacttUs";
+
 import AboutUs1 from "@/pages/customer/About";
+
 
 function AppRoutes({ user, signOut, handleSignIn }) {
   return (
     <Routes>
-      {/* Customer layout route */}
-      <Route element={<Layout user={user} signOut={signOut} handleSignIn={handleSignIn} />}>
+      {/* Customer layout routes */}
+      <Route
+        element={
+          <Layout user={user} signOut={signOut} handleSignIn={handleSignIn} />
+        }
+      >
         <Route path="/" element={<Customer />} />
+
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactUs />} />
+
         <Route path="/about" element={<AboutUs1 />} />
+
       </Route>
 
       {/* Admin layout and protected routes */}
@@ -37,7 +53,7 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/admin/*" element={<Navigate to="/" replace />} />
       )}
 
-      {/* Catch all */}
+      {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
