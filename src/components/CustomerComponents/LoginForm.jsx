@@ -11,7 +11,7 @@ import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import PasswordStrengthInput from "@/components/CustomerComponents/PasswordStrengthInput";
 import { toast } from "sonner";
 
-export default function LoginForm() {
+export default function LoginForm({ onSignIn }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -44,10 +44,13 @@ export default function LoginForm() {
     if (showCreateAccount) {
       toast.success("Account created successfully!");
       // API call or redirect
-    } else {
-      toast.success("Signed in successfully!");
-      // Normal login logic
-    }
+      } else {
+        toast.success("Signed in successfully!");
+        // Normal login logic
+        if (onSignIn) {
+          onSignIn({ email, role: 'admin' }); // Pass user data with role for testing
+        }
+      }
   };
 
   const isCreateDisabled =

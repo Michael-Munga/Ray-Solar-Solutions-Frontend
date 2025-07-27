@@ -1,3 +1,18 @@
+
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Layout from "@/components/CustomerComponents/Layout";
+import Customer from "@/components/CustomerComponents/Customer";
+import AdminLayout from "../pages/admin/AdminLayout";
+import Dashboard from "../pages/admin/Dashboard";
+import ContentFlagged from "../pages/admin/ContentFlags";
+import Escalation from "../pages/admin/Escalations";
+import ProductModeration from "../pages/admin/ProductModeration";
+import ProviderApproval from "../pages/admin/ProviderApproval";
+import UserManagement from "../pages/admin/UserManagement";
+import Analytics from "../pages/admin/Analytics";
+
+
 import { Routes, Route } from "react-router-dom";
 import Layout from "@/components/CustomerComponents/Layout";
 import Customer from "@/components/CustomerComponents/Customer";
@@ -5,16 +20,40 @@ import AboutUs1 from "@/pages/customer/About";
 
 import React from "react";
 
-function AppRoutes() {
+
+function AppRoutes({ user, signOut, handleSignIn }) {
   return (
     <Routes>
-      <Route element={<Layout />}>
+      {/* Customer layout route */}
+      <Route element={<Layout user={user} signOut={signOut} handleSignIn={handleSignIn} />}>
         <Route path="/" element={<Customer />} />
+
+      </Route>
+
+      {/* Admin layout and protected routes */}
+      {user ? (
+        <Route path="/admin" element={<AdminLayout signOut={signOut} />}>
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="content-flagged" element={<ContentFlagged />} />
+          <Route path="escalation" element={<Escalation />} />
+          <Route path="products" element={<ProductModeration />} />
+          <Route path="providers" element={<ProviderApproval />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="analytics" element={<Analytics />} />
+        </Route>
+      ) : (
+        <Route path="/admin/*" element={<Navigate to="/" replace />} />
+      )}
+
+      {/* Catch all */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+
 
         <Route path="/about" element={<AboutUs1 />} />
       </Route>
+
     </Routes>
   );
 }
-
 export default AppRoutes;

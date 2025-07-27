@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 
-// Dummy data
 const dummyEscalations = [
   {
     id: 1,
@@ -27,15 +26,14 @@ const dummyEscalations = [
   },
 ];
 
-// Utility functions for status and priority styling
 const getStatusBadge = (status) => {
   switch (status) {
     case "Pending":
       return "bg-yellow-100 text-yellow-800";
     case "Resolved":
-      return "bg-green-100 text-green-800";
+      return "bg-emerald-100 text-emerald-700";
     case "In Progress":
-      return "bg-blue-100 text-blue-800";
+      return "bg-lime-100 text-lime-700";
     default:
       return "bg-gray-100 text-gray-800";
   }
@@ -72,9 +70,9 @@ function Escalation() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="p-6 space-y-6">
       <motion.h2
-        className="text-2xl font-bold mb-6 text-gray-800"
+        className="text-2xl font-bold text-emerald-700"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -85,34 +83,32 @@ function Escalation() {
       {escalations.length === 0 ? (
         <p className="text-gray-500 text-center">No escalation cases to display.</p>
       ) : (
-        <div className="overflow-x-auto shadow rounded-lg border border-gray-200">
-          <table className="min-w-full bg-white divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="overflow-x-auto shadow rounded-2xl border border-gray-200 bg-white">
+          <table className="min-w-full text-sm text-left divide-y divide-gray-200">
+            <thead className="bg-emerald-100 text-emerald-700">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">Title</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-600">Actions</th>
+                <th className="px-6 py-3 font-semibold">Title</th>
+                <th className="px-6 py-3 font-semibold">Status</th>
+                <th className="px-6 py-3 font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {escalations.map((escalation) => (
-                <tr key={escalation.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-800">
-                    {escalation.title}
-                  </td>
-                  <td className="px-6 py-4 text-sm">
+                <tr key={escalation.id} className="hover:bg-emerald-50">
+                  <td className="px-6 py-4">{escalation.title}</td>
+                  <td className="px-6 py-4">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(
+                      className={`px-2 py-1 rounded-full font-medium text-xs ${getStatusBadge(
                         escalation.status
                       )}`}
                     >
                       {escalation.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm">
+                  <td className="px-6 py-4">
                     <button
                       onClick={() => setSelectedCase(escalation)}
-                      className="text-indigo-600 hover:text-indigo-800 font-medium"
+                      className="text-emerald-700 hover:underline font-medium"
                     >
                       View
                     </button>
@@ -127,15 +123,15 @@ function Escalation() {
       {/* Modal */}
       {selectedCase && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white w-full max-w-md rounded-lg shadow-xl p-6 relative">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-6 relative">
             <button
               onClick={handleCloseModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
             >
               <X size={20} />
             </button>
 
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">
+            <h3 className="text-xl font-semibold mb-2 text-emerald-700">
               {selectedCase.title}
             </h3>
             <p className="text-gray-700 mb-4">{selectedCase.description}</p>
@@ -156,7 +152,7 @@ function Escalation() {
             {selectedCase.status !== "Resolved" && (
               <button
                 onClick={() => handleMarkResolved(selectedCase.id)}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700"
               >
                 Mark as Resolved
               </button>
