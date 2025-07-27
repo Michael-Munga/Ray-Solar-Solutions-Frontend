@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
 import LoginForm from "./LoginForm";
+import { motion } from "framer-motion";
+
 import {
   Dialog,
   DialogTrigger,
@@ -12,8 +13,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-import { motion } from "framer-motion";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,9 +20,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+
 import { Sun, User, ShoppingCart, LogOut } from "lucide-react";
 
-export default function Navbar({ user, totalItems = 0, signOut }) {
+export default function Navbar({ user, totalItems = 0, signOut, handleSignIn }) {
   const handleSignOut = async () => {
     if (signOut) await signOut();
   };
@@ -38,15 +38,12 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-<Link to="/" className="flex items-center space-x-2 group">
-  <Sun className="h-9 w-9 text-[#ffbb1c] group-hover:animate-spin" />
-  <span className="text-2xl font-bold text-white tracking-wide">
-  Ray Solar Solutions
-</span>
-
-
-</Link>
-
+          <Link to="/" className="flex items-center space-x-2 group">
+            <Sun className="h-9 w-9 text-[#ffbb1c] group-hover:animate-spin" />
+            <span className="text-2xl font-bold text-white tracking-wide">
+              Ray Solar Solutions
+            </span>
+          </Link>
 
           {/* Navigation Links */}
           <div className="flex items-center space-x-10 text-base">
@@ -59,6 +56,16 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
                 {path.charAt(0).toUpperCase() + path.slice(1)}
               </Link>
             ))}
+
+            {/* Admin Link (only if logged in) */}
+            {user && (
+              <Link
+                to="/admin/dashboard"
+                className="text-white hover:text-yellow-300 transition font-semibold"
+              >
+                Admin
+              </Link>
+            )}
 
             {/* Right Actions */}
             <div className="flex items-center space-x-4">
@@ -79,7 +86,7 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
               </Link>
 
               {user ? (
-                // Account dropdown
+                
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -107,7 +114,7 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                // Login & CTA
+                
                 <>
                   <Dialog>
                     <DialogTrigger asChild>
@@ -129,7 +136,7 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4 }}
                       >
-                        <LoginForm />
+                        <LoginForm onSignIn={handleSignIn} />
                       </motion.div>
                     </DialogContent>
                   </Dialog>
@@ -148,4 +155,3 @@ export default function Navbar({ user, totalItems = 0, signOut }) {
     </nav>
   );
 }
-
