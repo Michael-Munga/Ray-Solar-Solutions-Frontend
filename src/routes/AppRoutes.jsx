@@ -13,7 +13,12 @@ import ProductModeration from "../pages/admin/ProductModeration";
 import ProviderApproval from "../pages/admin/ProviderApproval";
 import UserManagement from "../pages/admin/UserManagement";
 import Analytics from "../pages/admin/Analytics";
+
 import ContactUs from "@/pages/customer/contact/ContacttUs";
+
+import AboutUs1 from "@/pages/customer/About";
+
+
 function AppRoutes({ user, signOut, handleSignIn }) {
   return (
     <Routes>
@@ -24,8 +29,12 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         }
       >
         <Route path="/" element={<Customer />} />
+
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactUs />} />
+
+        <Route path="/about" element={<AboutUs1 />} />
+
       </Route>
 
       {/* Admin layout and protected routes */}
