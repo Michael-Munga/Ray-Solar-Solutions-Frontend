@@ -1,4 +1,7 @@
 
+import React from "react";
+
+
 import React, { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 
@@ -10,11 +13,13 @@ import { BrowserRouter } from 'react-router-dom';
 import CustomerRoutes from './routes/CustomerRoutes';
 
 
+
 import { Toaster } from "sonner";
 
 import React from "react";
 
 import Customer from "./components/CustomerComponents/Customer";
+
 
 
 import AppRoutes from "./routes/AppRoutes";
@@ -44,6 +49,7 @@ function App() {
 
   return (
 
+
     <>
       <Toaster />
       <AppRoutes user={user} signOut={signOut} handleSignIn={handleSignIn} />
@@ -52,8 +58,9 @@ function App() {
     <BrowserRouter>
       <CustomerRoutes />
     </BrowserRouter>
+
     <div>
-      <AppRoutes />
+      <AppRoutes/>
 
       <Toaster position="top-center" richColors />
     </div>
