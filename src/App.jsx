@@ -1,29 +1,7 @@
-
-import React from "react";
-
-
-import React, { useEffect, useState } from "react";
-import { Toaster } from "sonner";
-
-
-
-// src/App.jsx
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import CustomerRoutes from './routes/CustomerRoutes';
-
-
-
-import { Toaster } from "sonner";
-
-import React from "react";
-
-import Customer from "./components/CustomerComponents/Customer";
-
-
-
-import AppRoutes from "./routes/AppRoutes";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+import { Toaster } from "@/components/ui/sonner"; 
 
 function App() {
   const [user, setUser] = useState(null);
@@ -48,23 +26,10 @@ function App() {
   };
 
   return (
-
-
     <>
-      <Toaster />
+      <Toaster position="top-center" richColors />
       <AppRoutes user={user} signOut={signOut} handleSignIn={handleSignIn} />
     </>
-
-    <BrowserRouter>
-      <CustomerRoutes />
-    </BrowserRouter>
-
-    <div>
-      <AppRoutes/>
-
-      <Toaster position="top-center" richColors />
-    </div>
-
   );
 }
 
