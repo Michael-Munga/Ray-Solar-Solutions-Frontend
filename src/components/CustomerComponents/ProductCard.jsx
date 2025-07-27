@@ -25,8 +25,7 @@ const ProductCard = ({
   onAddToCart,
 }) => {
   return (
-    <Card className="bg-white/90 border border-amber-100 hover:shadow-xl hover:shadow-amber-400 hover:scale-[1.05] transition-all duration-300 ease-in-out flex flex-col h-full">
-    <Card className="bg-white border border-amber-100 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex flex-col h-full relative">
+    <Card className="bg-white/90 border border-amber-100 hover:shadow-xl hover:shadow-amber-400 hover:scale-[1.05] transition-all duration-300 ease-in-out flex flex-col h-full relative">
       {isPopular && (
         <Badge className="absolute top-3 right-3 z-10 bg-amber-500 text-white">
           Popular
@@ -110,7 +109,9 @@ const ProductCard = ({
           )}
         </div>
       </CardContent>
-      <CardFooter className="pt-0">
+
+      {/* Footer */}
+      <CardFooter className="pt-0 mt-auto">
         <button
           className="w-full bg-amber-500 text-white py-2 rounded-md hover:bg-amber-600 transition-colors duration-300"
           onClick={onAddToCart}
@@ -119,8 +120,6 @@ const ProductCard = ({
           Add to Cart
         </button>
       </CardFooter>
-      {/* Optional Footer */}
-      <CardFooter className="hidden" />
     </Card>
   );
 };
