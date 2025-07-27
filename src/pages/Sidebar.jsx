@@ -1,87 +1,96 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Home,
-  Users,
-  CheckCircle,
-  Package,
   Flag,
   AlertTriangle,
+  Package,
+  Users,
+  CheckCircle,
   BarChart2,
   LogOut,
-} from 'lucide-react';
-import logo from '../assets/admin_panel_logo.png';
+  Menu,
+  X,
+} from "lucide-react";
+import logo from "@/assets/admin_panel_logo.png";
 
 const navItems = [
-  { path: '/dashboard', label: 'Dashboard', icon: Home },
-  { path: '/providers', label: 'Provider Approvals', icon: CheckCircle },
-  { path: '/products', label: 'Product Moderation', icon: Package },
-  { path: '/content-flagged', label: 'Content Flagged', icon: Flag },
-  { path: '/escalation', label: 'Escalation', icon: AlertTriangle },
-  { path: '/users', label: 'User Management', icon: Users },
-  { path: '/analytics', label: 'Analytics', icon: BarChart2 },
+  { path: "/admin/dashboard", label: "Dashboard", icon: Home },
+  { path: "/admin/content-flagged", label: "Content Flagged", icon: Flag },
+  { path: "/admin/escalation", label: "Escalation", icon: AlertTriangle },
+  { path: "/admin/products", label: "Products", icon: Package },
+  { path: "/admin/providers", label: "Providers", icon: CheckCircle },
+  { path: "/admin/users", label: "Users", icon: Users },
+  { path: "/admin/analytics", label: "Analytics", icon: BarChart2 },
 ];
 
-function Sidebar() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // clear any stored auth tokens here if needed
-    navigate('/login'); // redirect to login page
-  };
+const Sidebar = ({ signOut }) => {
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <aside className="w-64 h-screen bg-gradient-to-b from-yellow-100 via-orange-200 to-yellow-50 text-gray-800 flex flex-col items-center py-6 shadow-xl shadow-yellow-400/40">
-      {/* Logo and Title */}
-      <div className="flex flex-col items-center mb-8">
-        <img
-          src={logo}
-          alt="Admin"
-          className="w-24 h-24 rounded-full object-cover border-4 border-yellow-500 shadow-[0_0_20px_#facc15]"
-        />
-        <h2 className="mt-3 text-xl font-semibold tracking-wide text-yellow-600 drop-shadow-[0_0_5px_#facc15]">
-          Admin Panel
-        </h2>
-      </div>
-
-      {/* Navigation */}
-      <nav className="w-full px-4 flex-1">
-        <ul className="space-y-2">
-          {navItems.map((item) => (
-            <li key={item.path}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  `flex items-center p-3 rounded transition duration-200 ease-in-out ${
-                    isActive
-                      ? 'bg-yellow-300/40 text-yellow-700 border-l-4 border-yellow-500 shadow-inner shadow-yellow-300/40'
-                      : 'hover:bg-yellow-100 hover:text-yellow-800'
-                  }`
-                }
-              >
-                <item.icon className="mr-3" size={20} />
-                <span>{item.label}</span>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* Logout Button */}
-      <div className="w-full px-4 mb-4">
+    <aside
+      className={`h-full bg-[linear-gradient(to_right,_#1c5853,_#1c5853)] text-white shadow-xl flex flex-col justify-between transition-all duration-300 ${
+        collapsed ? "w-20" : "w-64"
+      }`}
+    >
+      {/* Logo and Toggle */}
+      <div className="flex flex-col items-center py-4 border-b border-white/20 space-y-2 relative">
+        <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-yellow-400">
+          <img
+            src={logo}
+            alt="Logo"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        {!collapsed && (
+          <span className="text-lg font-extrabold bg-gradient-to-r from-[#ffbb1c] to-[#ffbb1c] bg-clip-text text-transparent text-center">
+            Admin Panel
+          </span>
+        )}
         <button
-          onClick={handleLogout}
-          className="flex items-center justify-center w-full p-3 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition duration-200 shadow hover:shadow-md"
+          onClick={() => setCollapsed((prev) => !prev)}
+          className="absolute top-2 right-2 bg-yellow-400 text-[#1c5853] p-1 rounded hover:bg-yellow-300"
         >
-          <LogOut className="mr-2" size={20} />
-          Logout
+          {collapsed ? <Menu size={18} /> : <X size={18} />}
         </button>
       </div>
 
-      {/* Bottom Glow Strip */}
-      <div className="w-full h-1 bg-yellow-400 shadow-[0_0_10px_#facc15]" />
+      {/* Navigation */}
+      <nav className="flex flex-col mt-4 space-y-1 px-2">
+        {navItems.map(({ path, label, icon: Icon }) => (
+          <NavLink
+            key={path}
+            to={path}
+            className={({ isActive }) =>
+              `flex items-center ${
+                collapsed ? "justify-center" : "gap-3"
+              } px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
+                isActive
+                  ? "bg-[#ffbb1c] text-[#1c5853]"
+                  : "hover:bg-[#267a72]"
+              }`
+            }
+          >
+            <Icon className="w-5 h-5" />
+            {!collapsed && <span>{label}</span>}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* Logout */}
+      <div className="p-4">
+        <button
+          onClick={signOut}
+          className={`w-full flex items-center ${
+            collapsed ? "justify-center" : "justify-start gap-3"
+          } px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium`}
+        >
+          <LogOut className="w-5 h-5" />
+          {!collapsed && <span>Logout</span>}
+        </button>
+      </div>
     </aside>
   );
-}
+};
 
 export default Sidebar;
