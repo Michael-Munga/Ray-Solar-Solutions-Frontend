@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import AppRoutes from "./routes/AppRoutes";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -20,6 +22,7 @@ function App() {
   const signOut = () => {
     setUser(null);
     localStorage.removeItem("user");
+    navigate("/");
   };
 
   return (

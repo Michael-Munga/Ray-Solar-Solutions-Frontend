@@ -14,7 +14,7 @@ const getPageTitle = (pathname) => {
   }
 };
 
-const AdminLayout = () => {
+const AdminLayout = ({ signOut }) => {
   const location = useLocation();
   const pageTitle = getPageTitle(location.pathname);
 
@@ -26,7 +26,7 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen" style={{ backgroundColor: pageBg }}>
-      <Sidebar />
+      <Sidebar signOut={signOut} />
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Header */}
         <header

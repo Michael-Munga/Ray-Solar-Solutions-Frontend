@@ -22,7 +22,7 @@ function AppRoutes({ user, signOut, handleSignIn }) {
 
       {/* Admin layout and protected routes */}
       {user ? (
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={<AdminLayout signOut={signOut} />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="content-flagged" element={<ContentFlagged />} />
