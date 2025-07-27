@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "@/components/CustomerComponents/Layout";
 import Customer from "@/components/CustomerComponents/Customer";
-import AboutUs1 from "@/pages/customer/About";
+import AboutPage from "@/pages/customer/about/AboutPage";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -24,7 +24,7 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         }
       >
         <Route path="/" element={<Customer />} />
-        <Route path="/about" element={<AboutUs1 />} />
+        <Route path="/about" element={<AboutPage />} />
       </Route>
 
       {/* Admin layout and protected routes */}
