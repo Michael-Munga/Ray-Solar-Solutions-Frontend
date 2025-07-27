@@ -5,6 +5,16 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+.spin {
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

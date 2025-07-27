@@ -1,11 +1,17 @@
 
+
 // src/App.jsx
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import CustomerRoutes from './routes/CustomerRoutes';
 
+
 import { Toaster } from "sonner";
-import React from 'react';
+
+import React from "react";
+
+import Customer from "./components/CustomerComponents/Customer";
+
 import AppRoutes from "./routes/AppRoutes";
 function App() {
   return (
@@ -13,9 +19,10 @@ function App() {
       <CustomerRoutes />
     </BrowserRouter>
     <div>
-    <AppRoutes/>
+      <AppRoutes />
+
       <Toaster position="top-center" richColors />
-      </div>
+    </div>
   );
 }
 
