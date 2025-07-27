@@ -6,13 +6,10 @@ import ProductShowcase from "./ProductShowcase";
 import Features from "./Features";
 
 
-import Hero from "./Hero";
-import ProductShowcase from "./ProductShowcase";
-import Features from "./Features";
 
-import SolarKits from "./SolarKits";
 import CallUsSection from "./TestimonialSection";
 import FriendlyInstallersSection from "./FriendlyInstallersSection";
+import SolarKits from "./SolarKits";
 
 export default function Customer() {
   return (
@@ -20,7 +17,7 @@ export default function Customer() {
 
       <Hero />
       <ProductShowcase />
-      <SolarKits />
+      <SolarKits/>
       <FriendlyInstallersSection />
       <Features />
       <CallUsSection />
