@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from "react";
 
-import React, { useEffect, useState } from "react";
+
 import { Toaster } from "sonner";
 import AppRoutes from "./routes/AppRoutes";
 
 import { useNavigate } from "react-router-dom";
-import AppRoutes from "./routes/AppRoutes";
-import { Toaster } from "@/components/ui/sonner"; 
+
+
 
 function App() {
   const [user, setUser] = useState(null);

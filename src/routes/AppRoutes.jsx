@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "@/components/CustomerComponents/Layout";
 import Customer from "@/components/CustomerComponents/Customer";
 import AboutPage from "@/pages/customer/about/AboutPage";
+import Solutions from "@/pages/customer/solutions/Solutions";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -16,7 +17,9 @@ import Analytics from "../pages/admin/Analytics";
 
 import ContactUs from "@/pages/customer/contact/ContacttUs";
 
-import AboutUs1 from "@/pages/customer/About";
+
+
+
 
 
 function AppRoutes({ user, signOut, handleSignIn }) {
@@ -33,7 +36,11 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactUs />} />
 
-        <Route path="/about" element={<AboutUs1 />} />
+
+        <Route path="/about" element={<AboutPage />} />
+
+
+        <Route path="/solutions" element={<Solutions/>} />
 
       </Route>
 
