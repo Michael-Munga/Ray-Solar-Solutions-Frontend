@@ -6,7 +6,7 @@ import Customer from "@/components/CustomerComponents/Customer";
 import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
-import ContactUs from "@/pages/customer/contact/ContacttUs";
+import ContactUs from "@/pages/customer/contact/ContactUs";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
