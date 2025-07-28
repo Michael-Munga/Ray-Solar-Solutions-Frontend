@@ -16,7 +16,8 @@ import Analytics from "../pages/admin/Analytics";
 
 import ContactUs from "@/pages/customer/contact/ContacttUs";
 
-import AboutUs1 from "@/pages/customer/About";
+import AboutUs1 from "@/pages/customer/about/About";
+
 
 
 function AppRoutes({ user, signOut, handleSignIn }) {
