@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +11,21 @@ import { Link } from "react-router-dom";
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import PasswordStrengthInput from "@/components/CustomerComponents/PasswordStrengthInput";
 import { toast } from "sonner";
+import { Eye, EyeOff } from "lucide-react";
+
+// Mock database of users
+let userDB = [
+  { email: "admin@example.com", password: "Admin123", role: "admin" },
+  { email: "provider@example.com", password: "Provider123", role: "provider" },
+  { email: "customer@example.com", password: "Customer123", role: "customer" },
+];
 
 export default function LoginForm({ onSignIn }) {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
 
   const handleGoogleSignInClick = () => {
@@ -36,42 +47,61 @@ export default function LoginForm({ onSignIn }) {
   };
 
   const handleSubmit = () => {
-    if (showCreateAccount && password !== confirmPassword) {
-      toast.error("Passwords do not match.");
+    const existingUser = userDB.find((u) => u.email === email);
+
+    if (showCreateAccount) {
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match.");
+        return;
+      }
+
+      if (existingUser) {
+        toast.error("User already exists.");
+        return;
+      }
+
+      const newUser = { email, password, role: "customer" };
+      userDB.push(newUser);
+      toast.success("Account created successfully!");
+      setShowCreateAccount(false);
+      if (onSignIn) onSignIn(newUser);
+      navigate("/");
       return;
     }
 
-    if (showCreateAccount) {
-      toast.success("Account created successfully!");
-      // API call or redirect
-      } else {
-        toast.success("Signed in successfully!");
-        // Normal login logic
-        if (onSignIn) {
-          onSignIn({ email, role: 'admin' }); // Pass user data with role for testing
-        }
-      }
+    if (!existingUser) {
+      toast.error("Account not found. Please create an account.");
+      return;
+    }
+
+    if (existingUser.password !== password) {
+      toast.error("Incorrect password.");
+      return;
+    }
+
+    toast.success("Signed in successfully!");
+    if (onSignIn) onSignIn(existingUser);
+
+    if (existingUser.role === "admin") navigate("/admin");
+    else if (existingUser.role === "provider") navigate("/provider");
+    else navigate("/customer");
   };
 
   const isCreateDisabled =
     showCreateAccount && (password !== confirmPassword || !password);
 
   return (
-    <Card
-      className="w-full max-w-md border border-green-600/40 bg-green-50/60 shadow-xl backdrop-blur-md rounded-2xl"
-      aria-describedby="login-description"
-    >
+    <Card className="w-full max-w-md border border-green-600/40 bg-green-50/60 shadow-xl backdrop-blur-md rounded-2xl">
       <CardContent className="space-y-6 p-8">
         <DialogTitle className="sr-only">
           {showCreateAccount ? "Create Account" : "Login"}
         </DialogTitle>
-        <DialogDescription id="login-description" className="sr-only">
+        <DialogDescription className="sr-only">
           {showCreateAccount
-            ? "Enter email and password to complete your account."
+            ? "Enter email and password to create your account."
             : "Enter your credentials to sign in."}
         </DialogDescription>
 
-        {/* Header */}
         <motion.div
           className="text-center space-y-2"
           initial={{ opacity: 0, y: 20 }}
@@ -105,6 +135,7 @@ export default function LoginForm({ onSignIn }) {
             className="bg-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </motion.div>
 
@@ -124,14 +155,24 @@ export default function LoginForm({ onSignIn }) {
               <Label htmlFor="password" className="text-green-900">
                 Password
               </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="bg-white"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="bg-white pr-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-2.5 text-green-700"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
           )}
         </motion.div>
@@ -154,6 +195,7 @@ export default function LoginForm({ onSignIn }) {
               className="bg-white"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
             {confirmPassword && password !== confirmPassword && (
               <p className="text-sm text-red-600">Passwords do not match.</p>
@@ -161,7 +203,7 @@ export default function LoginForm({ onSignIn }) {
           </motion.div>
         )}
 
-        {/* Buttons */}
+        {/* Action Buttons */}
         <motion.div
           className="flex flex-col gap-2"
           initial={{ opacity: 0, y: 20 }}
@@ -175,7 +217,6 @@ export default function LoginForm({ onSignIn }) {
           >
             {showCreateAccount ? "Create Account" : "Continue"}
           </Button>
-
           {showCreateAccount && (
             <Button
               variant="ghost"
@@ -187,69 +228,30 @@ export default function LoginForm({ onSignIn }) {
           )}
         </motion.div>
 
-        {/* Google Sign-In */}
+        {/* Create Account CTA */}
         {!showCreateAccount && (
-          <>
-            <motion.div
-              className="relative"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-center"
+          >
+            <Button
+              variant="ghost"
+              onClick={handleGoogleSignInClick}
+              className="text-green-800 hover:text-green-950 text-sm"
             >
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-green-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="bg-green-50 px-2 text-green-600">OR</span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Button
-                variant="ghost"
-                onClick={handleGoogleSignInClick}
-                className="w-full justify-center gap-2 border border-gray-300 bg-gray-100 text-gray-800 hover:bg-green-100 transition-colors shadow-sm rounded-lg"
-              >
-                <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 533.5 544.3"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path
-                    d="M533.5 278.4c0-17.4-1.6-34.2-4.6-50.4H272v95.3h146.9c-6.4 34.6-25.1 63.9-53.6 83.5v68h86.4c50.7-46.8 81.8-115.7 81.8-196.4z"
-                    fill="#4285F4"
-                  />
-                  <path
-                    d="M272 544.3c72.6 0 133.5-24 178-65.2l-86.4-68c-23.9 16-54.5 25.4-91.6 25.4-70.5 0-130.3-47.6-151.7-111.3H32v69.8c44.7 88.5 136.8 149.3 240 149.3z"
-                    fill="#34A853"
-                  />
-                  <path
-                    d="M120.3 325.2c-10.4-30.8-10.4-64 0-94.8v-69.8H32c-37.5 73.9-37.5 160.5 0 234.4l88.3-69.8z"
-                    fill="#FBBC05"
-                  />
-                  <path
-                    d="M272 107.7c39.5 0 75 13.6 103 40.4l77.1-77.1C405.3 24 344.5 0 272 0 168.8 0 76.7 60.8 32 149.3l88.3 69.8c21.4-63.7 81.2-111.4 151.7-111.4z"
-                    fill="#EA4335"
-                  />
-                </svg>
-                <span className="text-sm font-medium">Sign in with Google</span>
-              </Button>
-            </motion.div>
-          </>
+              Don't have an account? Create one →
+            </Button>
+          </motion.div>
         )}
 
-        {/* Terms */}
+        {/* Terms & Privacy */}
         <motion.p
           className="mt-4 text-xs text-center text-green-700"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.5 }}
         >
           By signing in you agree to our{" "}
           <Link
