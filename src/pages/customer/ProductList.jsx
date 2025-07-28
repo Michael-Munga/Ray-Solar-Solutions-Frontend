@@ -10,6 +10,13 @@ const products = [
     price: 1200,
     image: '/src/assets/solar-home-system.jpg',
     category: 'Home Systems',
+    rating: 4.5,
+    reviewCount: 120,
+    features: ['Energy Efficient', 'Easy Installation'],
+    isPopular: true,
+    wattage: '500W',
+    batteryLife: '10 hours',
+    warranty: '5 years',
   },
   {
     id: 2,
@@ -18,6 +25,12 @@ const products = [
     price: 150,
     image: '/src/assets/solar-garden-lights.jpg',
     category: 'Lighting',
+    rating: 4.2,
+    reviewCount: 80,
+    features: ['Waterproof', 'Long-lasting'],
+    wattage: '20W',
+    batteryLife: '8 hours',
+    warranty: '2 years',
   },
   {
     id: 3,
@@ -26,6 +39,12 @@ const products = [
     price: 80,
     image: '/src/assets/solar-lantern.jpg',
     category: 'Lighting',
+    rating: 4.0,
+    reviewCount: 50,
+    features: ['Lightweight', 'Rechargeable'],
+    wattage: '10W',
+    batteryLife: '6 hours',
+    warranty: '1 year',
   },
   {
     id: 4,
@@ -34,6 +53,41 @@ const products = [
     price: 300,
     image: '/src/assets/solar-street-light.jpg',
     category: 'Lighting',
+    rating: 4.3,
+    reviewCount: 70,
+    features: ['Durable', 'High Brightness'],
+    wattage: '100W',
+    batteryLife: '12 hours',
+    warranty: '3 years',
+  },
+  {
+    id: 5,
+    name: 'Solar Panel Kit',
+    description: 'Complete solar panel kit for residential use.',
+    price: 2000,
+    image: '/src/assets/solar-panel-kit.jpg',
+    category: 'Home Systems',
+    rating: 4.7,
+    reviewCount: 95,
+    features: ['High Efficiency', 'Easy Setup', 'Durable'],
+    isPopular: true,
+    wattage: '1000W',
+    batteryLife: 'N/A',
+    warranty: '10 years',
+  },
+  {
+    id: 6,
+    name: 'Solar Battery Storage',
+    description: 'Reliable battery storage for solar energy.',
+    price: 800,
+    image: '/src/assets/solar-battery-storage.jpg',
+    category: 'Storage',
+    rating: 4.4,
+    reviewCount: 60,
+    features: ['Long Life', 'Safe', 'High Capacity'],
+    wattage: 'N/A',
+    batteryLife: 'N/A',
+    warranty: '5 years',
   },
 ];
 
@@ -75,6 +129,13 @@ const ProductList = () => {
             description={product.description}
             price={product.price}
             image={product.image}
+            rating={product.rating}
+            reviewCount={product.reviewCount}
+            features={product.features}
+            isPopular={product.isPopular}
+            wattage={product.wattage}
+            batteryLife={product.batteryLife}
+            warranty={product.warranty}
             onAddToCart={() => addToCart(product)}
           />
         ))}
