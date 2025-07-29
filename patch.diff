@@ -1,24 +1,44 @@
-import React, { useState, useContext } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Leaf, Sun, Users } from "lucide-react";
-import backgroundImage from "../../assets/upscalemedia-transformed.jpg";
-import { useProducts } from "@/contexts/ProductsContext";
-import { useUser } from "@/contexts/UserContext";
-
-const UNSPLASH_ACCESS_KEY = "Fl_a6WNvP2m2GEpPf_dXkR2I6mNoO22NqACa4VWqQSw";
-
+const [showImages, setShowImages] = useState(false);
+  const [query, setQuery] = useState("solar panels");
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+=======
 const Hero = () => {
   const [showImages, setShowImages] = useState(false);
   const [query, setQuery] = useState("solar panels");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+>>>>>>> REPLACE
 
-  const { addProduct } = useProducts();
-
-  const user = useUser();
-  const isAdmin = user?.role === "admin";
-
+<<<<<<< SEARCH
+  const fetchImages = () => {
+    setLoading(true);
+    fetch(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+        query
+      )}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=9`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.results) {
+          const formattedImages = data.results.map((img) => ({
+            id: img.id,
+            url: img.urls.small,
+            description: img.alt_description,
+          }));
+          setImages(formattedImages);
+        } else {
+          setImages([]);
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setImages([]);
+        setLoading(false);
+      });
+  };
+=======
   const fetchImages = () => {
     setLoading(true);
     setError(null);
@@ -49,29 +69,153 @@ const Hero = () => {
         setError("Failed to fetch images. Please try again.");
       });
   };
+>>>>>>> REPLACE
 
-  const handleAddProduct = (img) => {
-    if (!isAdmin) {
-      alert("Only admins can add products.");
-      return;
-    }
-    const newProduct = {
-      id: img.id,
-      name: img.description ? img.description.charAt(0).toUpperCase() + img.description.slice(1) : "New Solar Product",
-      description: img.description || "A solar product added from image selection.",
-      price: 99,
-      image: img.url,
-      rating: 4.5,
-      reviewCount: 0,
-      features: ["Feature 1", "Feature 2"],
-      wattage: "10W LED",
-      batteryLife: "10 hours",
-      warranty: "1 year",
-    };
-    addProduct(newProduct);
-    alert(`Product "${newProduct.name}" added!`);
-  };
+<<<<<<< SEARCH
+  return (
+    <section className="relative min-h-screen flex flex-col justify-center bg-black text-white overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={backgroundImage}
+          alt="Rooftop solar panels during sunset"
+          className="w-full h-full object-cover opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+      </div>
 
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto py-28 sm:py-32">
+        <div className="max-w-2xl ml-6 sm:ml-10 md:ml-16 lg:ml-20 space-y-8 animate-fade-in select-none">
+          {/* Green Sustainable Badge */}
+          <div className="inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full border border-green-200 font-medium text-sm shadow-sm">
+            <Leaf className="h-4 w-4" />
+            <span>Sustainable Energy Solutions</span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight">
+            Lighting the Future <br />
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+              }}
+            >
+              One Roof at a Time
+            </span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
+            Reliable. Affordable. Clean. <br />
+            Discover solar-powered lighting solutions designed to empower homes,
+            businesses, and communities with energy independence.
+          </p>
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-4 pt-2">
+            {/* Explore Products */}
+            <Button
+              size="lg"
+              className="text-white px-6 py-3 text-base font-semibold shadow-md group"
+              style={{
+                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+              }}
+              onClick={() => {
+                setShowImages(true);
+                fetchImages(query);
+              }}
+            >
+              Explore Products
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+
+            {/* Contact Us */}
+            <Button
+              size="lg"
+              className="text-white px-6 py-3 text-base font-semibold flex items-center"
+              style={{
+                backgroundImage: "linear-gradient(to right, #0a9586 0%, #0a9586 100%)",
+              }}
+            >
+              <Phone className="h-5 w-5 mr-2" />
+              Contact Us
+            </Button>
+          </div>
+
+          {/* Stats Section */}
+          <div className="grid grid-cols-3 gap-6 pt-10 border-t border-white/20 mt-6">
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-1">
+                <Sun className="h-6 w-6 text-amber-400 mr-2" />
+                <span className="text-2xl font-bold">50K+</span>
+              </div>
+              <p className="text-sm text-white/80">Solar Lights Sold</p>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-1">
+                <Users className="h-6 w-6 text-cyan-400 mr-2" />
+                <span className="text-2xl font-bold">25K+</span>
+              </div>
+              <p className="text-sm text-white/80">Happy Customers</p>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-1">
+                <Leaf className="h-6 w-6 text-green-400 mr-2" />
+                <span className="text-2xl font-bold">100%</span>
+              </div>
+              <p className="text-sm text-white/80">Clean Energy</p>
+            </div>
+          </div>
+
+          {/* Image Search Section */}
+          {showImages && (
+            <div className="mt-10 space-y-4 bg-white/5 p-6 rounded-xl shadow-inner backdrop-blur-sm">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  fetchImages(query);
+                }}
+                className="flex gap-2"
+              >
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search solar images..."
+                  className="flex-1 px-4 py-2 rounded bg-white text-black"
+                />
+                <Button
+                  type="submit"
+                  className="bg-yellow-500 text-white font-semibold px-4 py-2 rounded"
+                >
+                  Search
+                </Button>
+              </form>
+
+              {loading ? (
+                <p className="text-white">Loading images...</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {images.map((img) => (
+                    <img
+                      key={img.id}
+                      src={img.url}
+                      alt={img.description || "solar product"}
+                      className="rounded-lg w-full h-48 object-cover shadow"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+=======
   return (
     <section className="relative min-h-screen flex flex-col justify-center bg-black text-white overflow-hidden">
       {/* Background Image */}
@@ -195,11 +339,7 @@ const Hero = () => {
                 <Button
                   type="button"
                   className="bg-gray-500 text-white font-semibold px-4 py-2 rounded hover:bg-gray-600 transition"
-                  onClick={() => {
-                    setQuery("");
-                    setImages([]);
-                    setError(null);
-                  }}
+                  onClick={clearSearch}
                 >
                   Clear
                 </Button>
@@ -232,15 +372,15 @@ const Hero = () => {
                 <p className="text-red-400 text-center">{error}</p>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {images.map((img) => (
-                      <img
-                        key={img.id}
-                        src={img.url}
-                        alt={img.description || "solar product"}
-                        className={`rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg ${isAdmin ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
-                        onClick={isAdmin ? () => handleAddProduct(img) : undefined}
-                      />
-                    ))}
+                  {images.map((img) => (
+                    <img
+                      key={img.id}
+                      src={img.url}
+                      alt={img.description || "solar product"}
+                      className="rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+                      onClick={() => window.open(img.url, "_blank")}
+                    />
+                  ))}
                 </div>
               )}
             </div>
@@ -250,7 +390,3 @@ const Hero = () => {
     </section>
   );
 };
-
-export default Hero;
-
-

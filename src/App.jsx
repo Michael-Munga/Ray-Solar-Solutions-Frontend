@@ -135,6 +135,8 @@ import { useNavigate } from "react-router-dom";
 
 
 
+import { UserProvider } from "@/contexts/UserContext";
+
 function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -160,7 +162,9 @@ function App() {
   return (
     <>
       <Toaster position="top-center" richColors />
-      <AppRoutes user={user} signOut={signOut} handleSignIn={handleSignIn} />
+      <UserProvider user={user}>
+        <AppRoutes user={user} signOut={signOut} handleSignIn={handleSignIn} />
+      </UserProvider>
     </>
   );
 }
