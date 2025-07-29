@@ -69,6 +69,12 @@ export default function Navbar({
                 {path.charAt(0).toUpperCase() + path.slice(1)}
               </Link>
             ))}
+            {/* Sell Button */}
+            <Link to="/provider/apply">
+              <Button className="bg-lime-400 text-black hover:bg-lime-500 font-semibold shadow">
+                Sell on Ray Solar
+              </Button>
+            </Link>
 
             {/* Right Actions */}
             <div className="flex items-center space-x-4">

@@ -7,6 +7,7 @@ import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
 import ContactUs from "@/pages/customer/contact/ContacttUs";
+import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -32,6 +33,9 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/products" element={<Products />} />
+      </Route>
+      <Route>
+        <Route path="/provider/apply" element={<ProviderApplicationForm />} />
       </Route>
 
       {user?.role === "admin" ? (
