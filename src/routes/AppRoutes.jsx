@@ -7,7 +7,6 @@ import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
 
-import ContactUs from "@/pages/customer/contact/ContacttUs";
 import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
 
 import ContactUs from "@/pages/customer/contact/ContactUs";
