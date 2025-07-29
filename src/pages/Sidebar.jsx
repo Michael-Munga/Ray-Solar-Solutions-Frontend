@@ -1,96 +1,144 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Home,
-  Flag,
-  AlertTriangle,
-  Package,
   Users,
   CheckCircle,
+  Package,
+  Flag,
+  AlertTriangle,
   BarChart2,
   LogOut,
-  Menu,
-  X,
-} from "lucide-react";
-import logo from "@/assets/admin_panel_logo.png";
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
+import logo from '../assets/admin_panel_logo.png';
 
 const navItems = [
-  { path: "/admin/dashboard", label: "Dashboard", icon: Home },
-  { path: "/admin/content-flagged", label: "Content Flagged", icon: Flag },
-  { path: "/admin/escalation", label: "Escalation", icon: AlertTriangle },
-  { path: "/admin/products", label: "Products", icon: Package },
-  { path: "/admin/providers", label: "Providers", icon: CheckCircle },
-  { path: "/admin/users", label: "Users", icon: Users },
-  { path: "/admin/analytics", label: "Analytics", icon: BarChart2 },
+  { path: '/admin/dashboard', label: 'Dashboard', icon: Home },
+  { path: '/admin/providers', label: 'Provider Approvals', icon: CheckCircle },
+  { path: '/admin/products', label: 'Product Moderation', icon: Package },
+  { path: '/admin/content-flagged', label: 'Content Flagged', icon: Flag },
+  { path: '/admin/escalation', label: 'Escalation', icon: AlertTriangle },
+  { path: '/admin/users', label: 'User Management', icon: Users },
+  { path: '/admin/analytics', label: 'Analytics', icon: BarChart2 },
 ];
 
-const Sidebar = ({ signOut }) => {
+function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/login');
+  };
+
+  const mainGreen = '#099687';
+  const lightGreen = '#d1f4ef';
+  const glowGreen = '#43bdae';
 
   return (
     <aside
-      className={`h-full bg-[linear-gradient(to_right,_#1c5853,_#1c5853)] text-white shadow-xl flex flex-col justify-between transition-all duration-300 ${
-        collapsed ? "w-20" : "w-64"
+      className={`h-screen flex flex-col transition-all duration-300 shadow-xl ${
+        collapsed ? 'w-20' : 'w-64'
       }`}
+      style={{
+        background: `linear-gradient(to bottom, ${lightGreen}, white)`,
+        color: '#1f2f2e',
+        boxShadow: `0 0 20px ${mainGreen}30`,
+      }}
     >
-      {/* Logo and Toggle */}
-      <div className="flex flex-col items-center py-4 border-b border-white/20 space-y-2 relative">
-        <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-yellow-400">
-          <img
-            src={logo}
-            alt="Logo"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        {!collapsed && (
-          <span className="text-lg font-extrabold bg-gradient-to-r from-[#ffbb1c] to-[#ffbb1c] bg-clip-text text-transparent text-center">
-            Admin Panel
-          </span>
-        )}
+      {/* Toggle Button */}
+      <div className="flex justify-end p-2">
         <button
-          onClick={() => setCollapsed((prev) => !prev)}
-          className="absolute top-2 right-2 bg-yellow-400 text-[#1c5853] p-1 rounded hover:bg-yellow-300"
+          onClick={() => setCollapsed(!collapsed)}
+          className="text-gray-600 hover:text-black"
         >
-          {collapsed ? <Menu size={18} /> : <X size={18} />}
+          {collapsed ? <ChevronsRight size={20} /> : <ChevronsLeft size={20} />}
         </button>
+      </div>
+
+      {/* Logo and Title */}
+      <div className="flex flex-col items-center mb-6 transition-all">
+        <img
+          src={logo}
+          alt="Admin"
+          className="w-16 h-16 rounded-full object-cover border-4"
+          style={{
+            borderColor: mainGreen,
+            boxShadow: `0 0 20px ${glowGreen}`,
+          }}
+        />
+        {!collapsed && (
+          <h2
+            className="mt-3 text-lg font-semibold tracking-wide"
+            style={{
+              color: mainGreen,
+              textShadow: `0 0 5px ${glowGreen}`,
+            }}
+          >
+            Admin Panel
+          </h2>
+        )}
       </div>
 
       {/* Navigation */}
-      <nav className="flex flex-col mt-4 space-y-1 px-2">
-        {navItems.map(({ path, label, icon: Icon }) => (
-          <NavLink
-            key={path}
-            to={path}
-            className={({ isActive }) =>
-              `flex items-center ${
-                collapsed ? "justify-center" : "gap-3"
-              } px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
-                isActive
-                  ? "bg-[#ffbb1c] text-[#1c5853]"
-                  : "hover:bg-[#267a72]"
-              }`
-            }
-          >
-            <Icon className="w-5 h-5" />
-            {!collapsed && <span>{label}</span>}
-          </NavLink>
-        ))}
+      <nav className="w-full px-2 flex-1">
+        <ul className="space-y-2">
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center p-2 rounded transition duration-200 ease-in-out ${
+                    isActive
+                      ? 'text-white border-l-4 shadow-inner'
+                      : 'hover:bg-gray-100 hover:text-gray-900'
+                  }`
+                }
+                style={({ isActive }) =>
+                  isActive
+                    ? {
+                        backgroundColor: `${mainGreen}33`,
+                        borderColor: mainGreen,
+                        boxShadow: `inset 0 0 10px ${mainGreen}33`,
+                        color: mainGreen,
+                      }
+                    : undefined
+                }
+              >
+                <item.icon className="mr-2" size={20} />
+                {!collapsed && <span>{item.label}</span>}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </nav>
 
-      {/* Logout */}
-      <div className="p-4">
+      {/* Logout Button */}
+      <div className="w-full px-3 mb-4">
         <button
-          onClick={signOut}
-          className={`w-full flex items-center ${
-            collapsed ? "justify-center" : "justify-start gap-3"
-          } px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium`}
+          onClick={handleLogout}
+          className="flex items-center justify-center w-full p-2 text-white rounded transition duration-200 shadow hover:shadow-md"
+          style={{
+            backgroundColor: mainGreen,
+            boxShadow: `0 0 8px ${glowGreen}`,
+          }}
         >
-          <LogOut className="w-5 h-5" />
-          {!collapsed && <span>Logout</span>}
+          <LogOut className="mr-2" size={20} />
+          {!collapsed && 'Logout'}
         </button>
       </div>
+
+      {/* Bottom Glow Strip */}
+      <div
+        className="w-full h-1"
+        style={{
+          backgroundColor: mainGreen,
+          boxShadow: `0 0 10px ${mainGreen}`,
+        }}
+      />
     </aside>
   );
-};
+}
 
 export default Sidebar;
