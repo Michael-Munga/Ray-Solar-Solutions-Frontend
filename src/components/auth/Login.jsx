@@ -13,7 +13,7 @@ const Login = ({ onLogin }) => {
     // Simple authentication simulation
     onLogin({
       id: 1,
-      name: 'Solar provider',
+      name: 'Solar Provider',
       email: formData.email,
       role: 'provider'
     });
@@ -31,7 +31,7 @@ const Login = ({ onLogin }) => {
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-green-100">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-yellow-500 rounded-full mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full mb-4">
               <Sun className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Solar Pro</h1>
@@ -77,7 +77,7 @@ const Login = ({ onLogin }) => {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-green-500 to-yellow-500 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
             >
               <div className="flex items-center justify-center">
                 <DollarSign className="w-5 h-5 mr-2" />

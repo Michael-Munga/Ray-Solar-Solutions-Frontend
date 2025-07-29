@@ -41,7 +41,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
         <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
         <div className="flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-lg">
           <Zap className="w-5 h-5 text-green-600" />
-          <span className="text-green-700 font-medium">Contributor Status</span>
+          <span className="text-green-700 font-medium">Status</span>
         </div>
       </div>
 
@@ -58,7 +58,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
                   <span className="text-sm text-green-600">{stat.change}</span>
                 </div>
               </div>
-              <div className={`w-12 h-12 bg-gradient-to-r ${stat.color} rounded-lg flex items-center justify-center`}>
+              <div className={`w-12 h-12 ${index === 3 ? 'bg-yellow-500' : 'bg-green-500'} rounded-lg flex items-center justify-center`}>
                 <stat.icon className="w-6 h-6 text-white" />
               </div>
             </div>
@@ -74,7 +74,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
             <div className="space-y-4">
               {recentProducts.map((product) => (
                 <div key={product.id} className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-yellow-500 rounded-lg flex items-center justify-center">
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
                     <Package className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -89,7 +89,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
               <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <h4 className="text-lg font-semibold text-gray-600 mb-2">No Products Yet</h4>
               <p className="text-gray-500 mb-4">Start adding solar products to begin earning</p>
-              <button className="bg-gradient-to-r from-green-500 to-yellow-500 text-white px-6 py-2 rounded-lg hover:from-green-600 hover:to-yellow-600 transition-all">
+              <button className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-all">
                 Add Your First Product
               </button>
             </div>
@@ -100,7 +100,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
         <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button className="w-full text-left p-4 bg-gradient-to-r from-green-50 to-yellow-50 rounded-lg border border-green-200 hover:from-green-100 hover:to-yellow-100 transition-all">
+            <button className="w-full text-left p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 transition-all">
               <div className="flex items-center">
                 <Package className="w-6 h-6 text-green-600 mr-3" />
                 <div>
@@ -110,7 +110,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
               </div>
             </button>
             
-            <button className="w-full text-left p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border border-blue-200 hover:from-blue-100 hover:to-green-100 transition-all">
+            <button className="w-full text-left p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-all">
               <div className="flex items-center">
                 <Users className="w-6 h-6 text-blue-600 mr-3" />
                 <div>
@@ -120,7 +120,7 @@ const Dashboard = ({ products, customers, supportTickets }) => {
               </div>
             </button>
             
-            <button className="w-full text-left p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200 hover:from-purple-100 hover:to-blue-100 transition-all">
+            <button className="w-full text-left p-4 bg-purple-50 rounded-lg border border-purple-200 hover:bg-purple-100 transition-all">
               <div className="flex items-center">
                 <MessageSquare className="w-6 h-6 text-purple-600 mr-3" />
                 <div>
@@ -134,20 +134,20 @@ const Dashboard = ({ products, customers, supportTickets }) => {
       </div>
 
       {/* Earnings Summary */}
-      <div className="bg-gradient-to-r from-green-500 to-yellow-500 rounded-xl shadow-xl p-8 text-white">
+      <div className="bg-yellow-500 rounded-xl shadow-xl p-8 text-white">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-2xl font-bold mb-2">Your Earnings</h3>
-            <p className="text-green-100">As a contributor, you earn from every product sale</p>
+            <p className="text-yellow-100">As a provider, you earn from every product sale</p>
           </div>
           <div className="text-right">
             <p className="text-4xl font-bold">$0.00</p>
-            <p className="text-green-100">Total earned</p>
+            <p className="text-yellow-100">Total earned</p>
           </div>
         </div>
         <div className="mt-6 bg-white bg-opacity-20 rounded-lg p-4">
           <p className="text-center text-white">
-            🚀 Start adding products to unlock your earning potential!
+            add products to start earning!
           </p>
         </div>
       </div>

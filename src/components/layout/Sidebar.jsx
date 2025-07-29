@@ -25,7 +25,7 @@ const Sidebar = () => {
     <div className="w-64 bg-white shadow-xl border-r border-green-100">
       <div className="p-6 border-b border-green-100">
         <div className="flex items-center">
-          <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-yellow-500 rounded-lg flex items-center justify-center mr-3">
+          <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center mr-3">
             <Sun className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -46,7 +46,7 @@ const Sidebar = () => {
                 to={path}
                 className={`flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
                   location.pathname === path
-                    ? 'bg-gradient-to-r from-green-500 to-yellow-500 text-white shadow-lg'
+                    ? 'bg-green-500 text-white shadow-lg'
                     : 'text-gray-600 hover:bg-green-50 hover:text-green-700'
                 }`}
               >
@@ -59,11 +59,11 @@ const Sidebar = () => {
       </nav>
 
       <div className="absolute bottom-4 left-4 right-4">
-        <div className="bg-gradient-to-r from-green-50 to-yellow-50 p-4 rounded-lg border border-green-200">
+        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-700">Earnings</p>
-              <p className="text-2xl font-bold text-green-600">$0.00</p>
+              <p className="text-2xl font-bold text-yellow-600">$0.00</p>
             </div>
             <DollarSign className="w-8 h-8 text-yellow-500" />
           </div>

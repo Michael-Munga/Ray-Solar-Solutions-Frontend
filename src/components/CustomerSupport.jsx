@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, User, Clock, AlertCircle, CheckCircle, Plus } from 'lucide-react';
+import { MessageSquare, User, Clock, AlertCircle, CheckCircle } from 'lucide-react';
 
 const CustomerSupport = ({ tickets, setTickets }) => {
   const [selectedTicket, setSelectedTicket] = useState(null);
@@ -208,7 +208,7 @@ const CustomerSupport = ({ tickets, setTickets }) => {
                   <div className="flex justify-end">
                     <button
                       type="submit"
-                      className="px-6 py-3 bg-gradient-to-r from-green-500 to-yellow-500 text-white rounded-lg hover:from-green-600 hover:to-yellow-600 transition-all shadow-lg"
+                      className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all shadow-lg"
                     >
                       Send Response
                     </button>

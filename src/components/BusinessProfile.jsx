@@ -62,7 +62,7 @@ const BusinessProfile = ({ user, setUser }) => {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-4">Business Logo</label>
               <div className="flex items-center space-x-6">
-                <div className="w-24 h-24 bg-gradient-to-r from-green-500 to-yellow-500 rounded-xl flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 bg-green-500 rounded-xl flex items-center justify-center overflow-hidden">
                   {profile.logo ? (
                     <img src={profile.logo} alt="Business Logo" className="w-full h-full object-cover" />
                   ) : (
@@ -187,7 +187,7 @@ const BusinessProfile = ({ user, setUser }) => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-yellow-500 text-white rounded-lg hover:from-green-600 hover:to-yellow-600 transition-all shadow-lg"
+                className="flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all shadow-lg"
               >
                 <Save className="w-5 h-5 mr-2" />
                 Save Profile
@@ -206,7 +206,7 @@ const BusinessProfile = ({ user, setUser }) => {
                 <span className="font-semibold text-green-600">85%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-gradient-to-r from-green-500 to-yellow-500 h-2 rounded-full" style={{width: '85%'}}></div>
+                <div className="bg-green-500 h-2 rounded-full" style={{width: '85%'}}></div>
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center text-green-600">
@@ -237,9 +237,9 @@ const BusinessProfile = ({ user, setUser }) => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-green-500 to-yellow-500 rounded-xl shadow-xl p-6 text-white">
+          <div className="bg-yellow-500 rounded-xl shadow-xl p-6 text-white">
             <h3 className="text-lg font-semibold mb-2">Contributor Benefits</h3>
-            <ul className="space-y-2 text-sm text-green-100">
+            <ul className="space-y-2 text-sm text-yellow-100">
               <li>• Earn from every product sale</li>
               <li>• Access to premium analytics</li>
               <li>• Priority customer support</li>

@@ -131,7 +131,7 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
                   name="price"
                   value={formData.price}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   placeholder="0.00"
                   min="0"
                   step="0.01"
@@ -222,7 +222,7 @@ const ProductForm = ({ product, onSubmit, onClose }) => {
             </button>
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-green-500 to-yellow-500 text-white rounded-lg hover:from-green-600 hover:to-yellow-600 transition-all shadow-lg"
+              className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all shadow-lg"
             >
               {product ? 'Update Product' : 'Add Product'}
             </button>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit, Trash2, Image, DollarSign, Package } from 'lucide-react';
+import { Plus, Edit, Trash2, Package, DollarSign } from 'lucide-react';
 import ProductForm from './ProductForm';
 
 const ProductsManager = ({ products, onAddProduct, onUpdateProduct, onDeleteProduct }) => {
@@ -41,7 +41,7 @@ const ProductsManager = ({ products, onAddProduct, onUpdateProduct, onDeleteProd
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-yellow-500 text-white rounded-lg hover:from-green-600 hover:to-yellow-600 transition-all shadow-lg"
+          className="flex items-center px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all shadow-lg"
         >
           <Plus className="w-5 h-5 mr-2" />
           Add Product
@@ -68,7 +68,7 @@ const ProductsManager = ({ products, onAddProduct, onUpdateProduct, onDeleteProd
                     className="w-full h-48 object-cover"
                   />
                 ) : (
-                  <div className="w-full h-48 bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center">
+                  <div className="w-full h-48 bg-green-100 flex items-center justify-center">
                     <Package className="w-16 h-16 text-gray-400" />
                   </div>
                 )}
@@ -94,8 +94,8 @@ const ProductsManager = ({ products, onAddProduct, onUpdateProduct, onDeleteProd
                 
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
-                    <DollarSign className="w-5 h-5 text-green-600 mr-1" />
-                    <span className="text-2xl font-bold text-green-600">{product.price}</span>
+                    <DollarSign className="w-5 h-5 text-yellow-600 mr-1" />
+                    <span className="text-2xl font-bold text-yellow-600">{product.price}</span>
                   </div>
                   <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
                     {product.category}
@@ -118,7 +118,7 @@ const ProductsManager = ({ products, onAddProduct, onUpdateProduct, onDeleteProd
         </div>
       ) : (
         <div className="text-center py-16">
-          <div className="w-24 h-24 bg-gradient-to-r from-green-100 to-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Package className="w-12 h-12 text-gray-400" />
           </div>
           <h3 className="text-2xl font-bold text-gray-600 mb-4">No Products Yet</h3>
@@ -127,7 +127,7 @@ const ProductsManager = ({ products, onAddProduct, onUpdateProduct, onDeleteProd
           </p>
           <button
             onClick={() => setShowForm(true)}
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-500 to-yellow-500 text-white rounded-lg hover:from-green-600 hover:to-yellow-600 transition-all shadow-lg text-lg font-semibold"
+            className="inline-flex items-center px-8 py-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all shadow-lg text-lg font-semibold"
           >
             <Plus className="w-6 h-6 mr-3" />
             Add Your First Product

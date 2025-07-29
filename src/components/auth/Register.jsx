@@ -21,7 +21,7 @@ const Register = ({ onLogin }) => {
       id: 1,
       name: formData.name,
       email: formData.email,
-      role: 'provoder'
+      role: 'contributor'
     });
   };
 
@@ -35,13 +35,13 @@ const Register = ({ onLogin }) => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 border border-green-100">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 border border-yellow-100">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-yellow-500 rounded-full mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500 rounded-full mb-4">
               <Sun className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Join Solar Pro</h1>
-            <p className="text-gray-600">providers earnings</p>
+            <p className="text-gray-600">Start your earnings</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -56,7 +56,7 @@ const Register = ({ onLogin }) => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                   placeholder="Enter your full name"
                   required
                 />
@@ -74,7 +74,7 @@ const Register = ({ onLogin }) => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                   placeholder="Enter your email"
                   required
                 />
@@ -92,7 +92,7 @@ const Register = ({ onLogin }) => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                   placeholder="Create a password"
                   required
                 />
@@ -110,7 +110,7 @@ const Register = ({ onLogin }) => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                   placeholder="Confirm your password"
                   required
                 />
@@ -119,7 +119,7 @@ const Register = ({ onLogin }) => {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-green-500 to-yellow-500 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="w-full bg-yellow-500 text-white py-3 rounded-lg font-semibold hover:bg-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
             >
               <div className="flex items-center justify-center">
                 <DollarSign className="w-5 h-5 mr-2" />
@@ -131,7 +131,7 @@ const Register = ({ onLogin }) => {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-green-600 hover:text-green-700 font-semibold">
+              <Link to="/login" className="text-yellow-600 hover:text-yellow-700 font-semibold">
                 Sign in here
               </Link>
             </p>
