@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Dashboard from './components/Dashboard';
-import ProductsManager from './components/products/ProductsManager';
-import Analytics from './components/Analytics';
-import CustomerSupport from './components/CustomerSupport';
-import BusinessProfile from './components/BusinessProfile';
-import Sidebar from './components/layout/Sidebar';
-import Header from './components/layout/Header';
+
+import Dashboard from './components/dashboard/Dashboard';
+import ProductsManager from './components/product/productManager';
+import Analytics from './components/dashboard/Analytics';
+import CustomerSupport from './components/dashboard/CustomerSupport';
+import BusinessProfile from './components/dashboard/BusinessProfile';
+
+import Sidebar from './layout/Side';
+import Header from './layout/Header';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,27 +21,23 @@ function App() {
   const [supportTickets, setSupportTickets] = useState([]);
 
   useEffect(() => {
-    // Check if user is logged in (localStorage simulation)
     const savedUser = localStorage.getItem('solarUser');
     if (savedUser) {
       setUser(JSON.parse(savedUser));
       setIsAuthenticated(true);
     }
 
-    // Load demo data if authenticated
     if (isAuthenticated) {
       loadDemoData();
     }
   }, [isAuthenticated]);
 
   const loadDemoData = () => {
-    // Demo customers data
     setCustomers([
       { id: 1, name: 'Green Energy Corp', email: 'contact@greenenergy.com', lastContact: '2024-01-15' },
       { id: 2, name: 'Solar Solutions Ltd', email: 'info@solarsolutions.com', lastContact: '2024-01-12' }
     ]);
 
-    // Demo support tickets
     setSupportTickets([
       { id: 1, customer: 'Green Energy Corp', subject: 'Installation Query', status: 'open', priority: 'high', date: '2024-01-15' },
       { id: 2, customer: 'Solar Solutions Ltd', subject: 'Product Specifications', status: 'resolved', priority: 'medium', date: '2024-01-12' }
