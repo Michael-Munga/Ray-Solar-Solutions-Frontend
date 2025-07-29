@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import LoginForm from "./LoginForm";
@@ -23,9 +23,22 @@ import {
 
 import { Sun, User, ShoppingCart, LogOut } from "lucide-react";
 
-export default function Navbar({ user, totalItems = 0, signOut, handleSignIn }) {
+export default function Navbar({
+  user,
+  totalItems = 0,
+  signOut,
+  handleSignIn,
+}) {
+  const navigate = useNavigate();
+
   const handleSignOut = async () => {
     if (signOut) await signOut();
+  };
+
+  const goToDashboard = () => {
+    if (user?.role === "admin") return navigate("/admin/dashboard");
+    if (user?.role === "provider") return navigate("/provider/dashboard");
+    if (user?.role === "customer") return navigate("/customer/dashboard");
   };
 
   return (
@@ -56,27 +69,19 @@ export default function Navbar({ user, totalItems = 0, signOut, handleSignIn }) 
                 {path.charAt(0).toUpperCase() + path.slice(1)}
               </Link>
             ))}
-
-            {/* Admin Link (only if logged in) */}
-            {user && (
-              <Link
-                to="/admin/dashboard"
-                className="text-white hover:text-yellow-300 transition font-semibold"
-              >
-                Admin
-              </Link>
-            )}
+            {/* Sell Button */}
+            <Link to="/provider/apply">
+              <Button className="bg-lime-400 text-black hover:bg-lime-500 font-semibold shadow">
+                Sell on Ray Solar
+              </Button>
+            </Link>
 
             {/* Right Actions */}
             <div className="flex items-center space-x-4">
               {/* Cart */}
               <Link to="/cart">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="p-2 relative text-white hover:bg-white/10"
-                >
-                  <ShoppingCart className="h-6 w-6" />
+                <Button className="relative bg-white text-green-800 hover:bg-lime-100">
+                  <ShoppingCart className="h-5 w-5" />
                   {totalItems > 0 && (
                     <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-lime-400 text-xs text-black">
                       {totalItems}
@@ -85,28 +90,35 @@ export default function Navbar({ user, totalItems = 0, signOut, handleSignIn }) 
                 </Button>
               </Link>
 
-              {user ? (
-                
+              {/* Auth Section */}
+              {user?.email ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="flex items-center gap-2 text-white hover:bg-white/10"
-                    >
-                      <User className="h-6 w-6" />
+                    <Button className="bg-white text-green-800 hover:bg-lime-100 flex items-center gap-2">
+                      <User className="h-5 w-5" />
                       Account
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="bg-white border">
-                    <DropdownMenuItem disabled className="text-muted-foreground">
+                    <DropdownMenuItem
+                      disabled
+                      className="text-muted-foreground"
+                    >
                       {user.email}
                     </DropdownMenuItem>
+
                     <DropdownMenuSeparator />
+
+                    <DropdownMenuItem onClick={goToDashboard}>
+                      Dashboard
+                    </DropdownMenuItem>
+
                     <DropdownMenuItem asChild>
                       <Link to="/cart">View Cart</Link>
                     </DropdownMenuItem>
+
                     <DropdownMenuSeparator />
+
                     <DropdownMenuItem onClick={handleSignOut}>
                       <LogOut className="h-5 w-5 mr-2" />
                       Sign Out
@@ -114,15 +126,11 @@ export default function Navbar({ user, totalItems = 0, signOut, handleSignIn }) 
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                
                 <>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button
-                        size="sm"
-                        className="bg-white text-green-800 border border-green-800 hover:bg-lime-100 transition"
-                      >
-                        <User className="h-5 w-5 mr-1 text-green-800" />
+                      <Button className="bg-white text-green-800 hover:bg-lime-100 flex items-center">
+                        <User className="h-5 w-5 mr-1" />
                         Sign In
                       </Button>
                     </DialogTrigger>
@@ -140,12 +148,6 @@ export default function Navbar({ user, totalItems = 0, signOut, handleSignIn }) 
                       </motion.div>
                     </DialogContent>
                   </Dialog>
-
-                  <Link to="/auth">
-                    <Button className="bg-white text-green-900 hover:bg-lime-200 text-base">
-                      Get Started
-                    </Button>
-                  </Link>
                 </>
               )}
             </div>
