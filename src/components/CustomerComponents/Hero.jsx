@@ -15,6 +15,9 @@ const Hero = () => {
 
   const { addProduct } = useProducts();
 
+  // Hardcoded admin flag
+  const isAdmin = false; // Change to true to simulate admin user
+
   const fetchImages = () => {
     setLoading(true);
     setError(null);
@@ -47,6 +50,10 @@ const Hero = () => {
   };
 
   const handleAddProduct = (img) => {
+    if (!isAdmin) {
+      alert("Only admins can add products.");
+      return;
+    }
     const newProduct = {
       id: img.id,
       name: img.description ? img.description.charAt(0).toUpperCase() + img.description.slice(1) : "New Solar Product",
@@ -224,15 +231,15 @@ const Hero = () => {
                 <p className="text-red-400 text-center">{error}</p>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {images.map((img) => (
-                    <img
-                      key={img.id}
-                      src={img.url}
-                      alt={img.description || "solar product"}
-                      className="rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
-                      onClick={() => handleAddProduct(img)}
-                    />
-                  ))}
+                    {images.map((img) => (
+                      <img
+                        key={img.id}
+                        src={img.url}
+                        alt={img.description || "solar product"}
+                        className={`rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg ${isAdmin ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
+                        onClick={isAdmin ? () => handleAddProduct(img) : undefined}
+                      />
+                    ))}
                 </div>
               )}
             </div>
@@ -244,4 +251,5 @@ const Hero = () => {
 };
 
 export default Hero;
+
 
