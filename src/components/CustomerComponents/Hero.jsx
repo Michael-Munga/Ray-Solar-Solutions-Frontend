@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Leaf, Sun, Users } from "lucide-react";
 import backgroundImage from "../../assets/upscalemedia-transformed.jpg";
 import { useProducts } from "@/contexts/ProductsContext";
+import { useUser } from "@/contexts/UserContext";
 
 const UNSPLASH_ACCESS_KEY = "Fl_a6WNvP2m2GEpPf_dXkR2I6mNoO22NqACa4VWqQSw";
 
@@ -15,8 +16,8 @@ const Hero = () => {
 
   const { addProduct } = useProducts();
 
-  // Hardcoded admin flag
-  const isAdmin = false; // Change to true to simulate admin user
+  const user = useUser();
+  const isAdmin = user?.role === "admin";
 
   const fetchImages = () => {
     setLoading(true);
