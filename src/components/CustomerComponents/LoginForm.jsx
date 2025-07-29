@@ -12,17 +12,13 @@ import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import PasswordStrengthInput from "@/components/CustomerComponents/PasswordStrengthInput";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
-
-// Mock database of users
-let userDB = [
-  { email: "admin@example.com", password: "Admin123", role: "admin" },
-  { email: "provider@example.com", password: "Provider123", role: "provider" },
-  { email: "customer@example.com", password: "Customer123", role: "customer" },
-];
+import axios from "@/services/api";
 
 export default function LoginForm({ onSignIn }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,6 +28,8 @@ export default function LoginForm({ onSignIn }) {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+    setFirstName("");
+    setLastName("");
     setShowCreateAccount(true);
     toast.info(
       "Please set your email and password to complete account creation."
@@ -42,53 +40,61 @@ export default function LoginForm({ onSignIn }) {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+    setFirstName("");
+    setLastName("");
     setShowCreateAccount(false);
     toast.dismiss();
   };
 
-  const handleSubmit = () => {
-    const existingUser = userDB.find((u) => u.email === email);
-
+  const handleSubmit = async () => {
     if (showCreateAccount) {
       if (password !== confirmPassword) {
         toast.error("Passwords do not match.");
         return;
       }
 
-      if (existingUser) {
-        toast.error("User already exists.");
-        return;
+      try {
+        const res = await axios.post("/auth/register", {
+          email,
+          password,
+          first_name: firstName,
+          last_name: lastName,
+        });
+
+        toast.success("Account created successfully!");
+        setShowCreateAccount(false);
+        const { user } = res.data;
+        localStorage.setItem("user", JSON.stringify(user));
+        if (onSignIn) onSignIn(user);
+        navigate("/");
+      } catch (err) {
+        toast.error(err?.response?.data?.error || "Registration failed.");
       }
 
-      const newUser = { email, password, role: "customer" };
-      userDB.push(newUser);
-      toast.success("Account created successfully!");
-      setShowCreateAccount(false);
-      if (onSignIn) onSignIn(newUser);
-      navigate("/");
       return;
     }
 
-    if (!existingUser) {
-      toast.error("Account not found. Please create an account.");
-      return;
+    try {
+      const res = await axios.post("/auth/login", { email, password });
+      const { access_token, user } = res.data;
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("user", JSON.stringify(user));
+      toast.success("Signed in successfully!");
+      if (onSignIn) onSignIn(user);
+
+      const role = user.user_type?.name || user.user_type_name;
+
+      if (role === "admin") navigate("/admin");
+      else if (role === "provider") navigate("/provider");
+      else navigate("/customer");
+    } catch (err) {
+      toast.error(err?.response?.data?.error || "Invalid credentials.");
     }
-
-    if (existingUser.password !== password) {
-      toast.error("Incorrect password.");
-      return;
-    }
-
-    toast.success("Signed in successfully!");
-    if (onSignIn) onSignIn(existingUser);
-
-    if (existingUser.role === "admin") navigate("/admin");
-    else if (existingUser.role === "provider") navigate("/provider");
-    else navigate("/customer");
   };
 
   const isCreateDisabled =
-    showCreateAccount && (password !== confirmPassword || !password);
+    showCreateAccount &&
+    (!firstName || !lastName || password !== confirmPassword || !password);
 
   return (
     <Card className="w-full max-w-md border border-green-600/40 bg-green-50/60 shadow-xl backdrop-blur-md rounded-2xl">
@@ -118,7 +124,42 @@ export default function LoginForm({ onSignIn }) {
           </p>
         </motion.div>
 
-        {/* Email */}
+        {showCreateAccount && (
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+          >
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="firstName" className="text-green-900">
+                First Name
+              </Label>
+              <Input
+                id="firstName"
+                type="text"
+                className="bg-white"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="lastName" className="text-green-900">
+                Last Name
+              </Label>
+              <Input
+                id="lastName"
+                type="text"
+                className="bg-white"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </div>
+          </motion.div>
+        )}
+
         <motion.div
           className="space-y-2"
           initial={{ opacity: 0, y: 20 }}
@@ -131,7 +172,6 @@ export default function LoginForm({ onSignIn }) {
           <Input
             id="email"
             type="email"
-            placeholder="you@solarcompany.com"
             className="bg-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -139,7 +179,6 @@ export default function LoginForm({ onSignIn }) {
           />
         </motion.div>
 
-        {/* Password */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -159,7 +198,6 @@ export default function LoginForm({ onSignIn }) {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
                   className="bg-white pr-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -177,7 +215,6 @@ export default function LoginForm({ onSignIn }) {
           )}
         </motion.div>
 
-        {/* Confirm Password */}
         {showCreateAccount && (
           <motion.div
             className="space-y-2"
@@ -191,7 +228,6 @@ export default function LoginForm({ onSignIn }) {
             <Input
               id="confirmPassword"
               type="password"
-              placeholder="Re-enter your password"
               className="bg-white"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -203,7 +239,6 @@ export default function LoginForm({ onSignIn }) {
           </motion.div>
         )}
 
-        {/* Action Buttons */}
         <motion.div
           className="flex flex-col gap-2"
           initial={{ opacity: 0, y: 20 }}
@@ -228,7 +263,6 @@ export default function LoginForm({ onSignIn }) {
           )}
         </motion.div>
 
-        {/* Create Account CTA */}
         {!showCreateAccount && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -246,7 +280,6 @@ export default function LoginForm({ onSignIn }) {
           </motion.div>
         )}
 
-        {/* Terms & Privacy */}
         <motion.p
           className="mt-4 text-xs text-center text-green-700"
           initial={{ opacity: 0 }}
