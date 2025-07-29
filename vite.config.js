@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+provider-dashboard
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,3 +9,25 @@ export default defineConfig({
     exclude: ['lucide-react'],
   },
 });
+
+import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  optimizeDeps: {
+    exclude: ['lucide-react'],
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
+});
+
+ dev
