@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import ProductCard from '../../components/CustomerComponents/ProductCard';
-import { useCart } from '../../contexts/CartContext';
+import ProductCard from '../../../components/CustomerComponents/ProductCard';
+
+// Removed useCart import and usage due to error
 
 const products = [
   {
@@ -91,10 +92,9 @@ const products = [
   },
 ];
 
-const ProductList = () => {
-  const { addToCart } = useCart();
-  const categories = ['All', ...new Set(products.map((p) => p.category))];
+const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const categories = ['All', ...new Set(products.map((p) => p.category))];
 
   const filteredProducts =
     selectedCategory === 'All'
@@ -136,7 +136,6 @@ const ProductList = () => {
             wattage={product.wattage}
             batteryLife={product.batteryLife}
             warranty={product.warranty}
-            onAddToCart={() => addToCart(product)}
           />
         ))}
       </div>
@@ -144,4 +143,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default Products;
