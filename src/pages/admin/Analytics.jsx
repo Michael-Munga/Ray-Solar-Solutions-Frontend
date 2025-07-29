@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   LineChart,
   Line,
@@ -15,45 +16,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-// Colors
 const COLORS = ['#10B981', '#A7F3D0', '#065F46'];
-
-// Dummy data
-const userGrowthData = [
-  { month: 'Jan', users: 20 },
-  { month: 'Feb', users: 35 },
-  { month: 'Mar', users: 45 },
-  { month: 'Apr', users: 60 },
-  { month: 'May', users: 70 },
-  { month: 'Jun', users: 85 },
-];
-
-const productStatusData = [
-  { name: 'Approved', value: 45 },
-  { name: 'Pending', value: 12 },
-  { name: 'Rejected', value: 5 },
-];
-
-const ticketStatusData = [
-  { name: 'Open', value: 10 },
-  { name: 'In Progress', value: 6 },
-  { name: 'Resolved', value: 20 },
-];
-
-// Modal ticket details (simulated)
-const ticketDetails = {
-  Open: [
-    { id: '#1234', user: 'James', subject: 'Delayed installation' },
-    { id: '#1235', user: 'Sarah', subject: 'Panel overheating' },
-  ],
-  'In Progress': [
-    { id: '#1236', user: 'Liam', subject: 'Incorrect invoice' },
-  ],
-  Resolved: [
-    { id: '#1237', user: 'Amina', subject: 'Warranty request' },
-    { id: '#1238', user: 'John', subject: 'Maintenance follow-up' },
-  ],
-};
 
 function AnalyticsCard({ title, value }) {
   return (
@@ -113,8 +76,8 @@ function PieChartCard({ title, data, description, onSliceClick }) {
   );
 }
 
-function TicketModal({ status, onClose }) {
-  const tickets = ticketDetails[status] || [];
+function TicketModal({ status, onClose, details }) {
+  const tickets = details[status] || [];
 
   return (
     <AnimatePresence>
@@ -155,7 +118,34 @@ function TicketModal({ status, onClose }) {
 }
 
 export default function Analytics() {
+  const [userGrowthData, setUserGrowthData] = useState([]);
+  const [productStatusData, setProductStatusData] = useState([]);
+  const [ticketStatusData, setTicketStatusData] = useState([]);
+  const [ticketDetails, setTicketDetails] = useState({});
   const [modalStatus, setModalStatus] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:5000/analytics/users')
+      .then((res) => setUserGrowthData(res.data))
+      .catch((err) => console.error('User data error:', err));
+
+    axios.get('http://127.0.0.1:5000/analytics/products/status')
+      .then((res) => setProductStatusData(res.data))
+      .catch((err) => console.error('Product status error:', err));
+
+    axios.get('http://127.0.0.1:5000/analytics/tickets/status')
+      .then((res) => setTicketStatusData(res.data))
+      .catch((err) => console.error('Ticket status error:', err));
+  }, []);
+
+  const handleSliceClick = (status) => {
+    axios.get(`http://127.0.0.1:5000/analytics/tickets/${status.toLowerCase()}`)
+      .then((res) => {
+        setTicketDetails((prev) => ({ ...prev, [status]: res.data }));
+        setModalStatus(status);
+      })
+      .catch((err) => console.error('Ticket detail error:', err));
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -163,14 +153,12 @@ export default function Analytics() {
         <h2 className="text-3xl font-bold text-emerald-800 mb-2">Analytics Overview</h2>
         <p className="text-emerald-600 mb-6">Track key metrics, trends, and system activity over time.</p>
 
-        {/* Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <AnalyticsCard title="Total New Users (Last 30 Days)" value="85" />
-          <AnalyticsCard title="Approved Providers (Current)" value="45" />
+          <AnalyticsCard title="Total New Users (Last 30 Days)" value={userGrowthData.reduce((acc, item) => acc + item.users, 0)} />
+          <AnalyticsCard title="Approved Providers (Current)" value={productStatusData.find(p => p.name === 'Approved')?.value || 0} />
           <AnalyticsCard title="Avg. Ticket Resolution Time" value="4.2 hrs" />
         </div>
 
-        {/* Chart Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <LineChartCard
             title="User Growth Trend"
@@ -190,13 +178,13 @@ export default function Analytics() {
             title="Ticket Status Breakdown"
             data={ticketStatusData}
             description="Current state of all support tickets."
-            onSliceClick={(status) => setModalStatus(status)}
+            onSliceClick={handleSliceClick}
           />
         </div>
       </div>
 
       {modalStatus && (
-        <TicketModal status={modalStatus} onClose={() => setModalStatus(null)} />
+        <TicketModal status={modalStatus} onClose={() => setModalStatus(null)} details={ticketDetails} />
       )}
     </div>
   );

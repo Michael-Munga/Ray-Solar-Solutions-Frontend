@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../Sidebar';
+
 
 const getPageTitle = (pathname) => {
   switch (pathname) {
@@ -10,23 +12,33 @@ const getPageTitle = (pathname) => {
     case '/providers': return 'Provider Approvals';
     case '/users': return 'User Management';
     case '/analytics': return 'Analytics Overview';
-    default: return 'Admin Panel';
+    default: return null;
   }
 };
 
+
+const formatTitle = (str) =>
+  str
+    .replace('/', '')
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
 const AdminLayout = ({ signOut }) => {
   const location = useLocation();
-  const pageTitle = getPageTitle(location.pathname);
+  const pageTitle = getPageTitle(location.pathname) || formatTitle(location.pathname);
 
-  // Theme colors
-  const mainGreen = '#145b52'; // Primary dark green
-  const headerBg = '#d7f7ec';  // Light mint green
-  const textColor = '#094d3b'; // Deep teal green
-  const pageBg = '#f0fdf9';    // Eco clean background
+ 
+  const mainGreen = '#145b52'; 
+  const headerBg = '#d7f7ec';  
+  const textColor = '#094d3b'; 
+  const pageBg = '#f0fdf9';    
+ 
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <div className="flex h-screen" style={{ backgroundColor: pageBg }}>
-      <Sidebar signOut={signOut} />
+      {sidebarOpen && <Sidebar signOut={signOut} />}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top Header */}
         <header
@@ -40,6 +52,15 @@ const AdminLayout = ({ signOut }) => {
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: textColor }}>
             {pageTitle}
           </h1>
+
+          {/* Optional: Toggle sidebar on small screens */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="md:hidden text-sm px-3 py-1 rounded border"
+            style={{ borderColor: mainGreen, color: textColor }}
+          >
+            {sidebarOpen ? 'Hide Menu' : 'Show Menu'}
+          </button>
         </header>
 
         {/* Main Content */}
@@ -47,7 +68,9 @@ const AdminLayout = ({ signOut }) => {
           className="flex-1 overflow-x-hidden overflow-y-auto p-6"
           style={{ backgroundColor: pageBg }}
         >
-          <Outlet />
+          <React.Suspense fallback={<div>Loading page...</div>}>
+            <Outlet />
+          </React.Suspense>
         </main>
       </div>
     </div>
@@ -55,3 +78,4 @@ const AdminLayout = ({ signOut }) => {
 };
 
 export default AdminLayout;
+
