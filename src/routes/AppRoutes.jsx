@@ -6,12 +6,8 @@ import Customer from "@/components/CustomerComponents/Customer";
 import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
-
-import ContactUs from "@/pages/customer/contact/ContacttUs";
+import ContactUs from "@/pages/customer/contact/ContactUs"
 import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
-
-import ContactUs from "@/pages/customer/contact/ContactUs";
-
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -21,7 +17,6 @@ import ProductModeration from "../pages/admin/ProductModeration";
 import ProviderApproval from "../pages/admin/ProviderApproval";
 import UserManagement from "../pages/admin/UserManagement";
 import Analytics from "../pages/admin/Analytics";
-
 
 // import ProviderDashboard from "../pages/provider/ProviderDashboard";
 
