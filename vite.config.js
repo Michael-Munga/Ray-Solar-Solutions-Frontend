@@ -1,15 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-provider-dashboard
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
-});
-
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
@@ -30,4 +20,3 @@ export default defineConfig({
   },
 });
 
- dev
