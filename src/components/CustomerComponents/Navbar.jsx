@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import LoginForm from "./LoginForm";
 import { motion } from "framer-motion";
+import api from "@/services/api";
 
 import {
   Dialog,
@@ -23,13 +24,9 @@ import {
 
 import { Sun, User, ShoppingCart, LogOut } from "lucide-react";
 
-export default function Navbar({
-  user,
-  totalItems = 0,
-  signOut,
-  handleSignIn,
-}) {
+export default function Navbar({ user, signOut, handleSignIn }) {
   const navigate = useNavigate();
+  const [cartCount, setCartCount] = useState(0);
 
   const handleSignOut = async () => {
     if (signOut) await signOut();
@@ -40,6 +37,41 @@ export default function Navbar({
     if (user?.role === "provider") return navigate("/provider/dashboard");
     if (user?.role === "customer") return navigate("/customer/dashboard");
   };
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        if (user?.email) {
+          const response = await api.get("/api/cart");
+          const data = response.data;
+
+          const items = Array.isArray(data) ? data : data.items || [];
+          const totalItems = items.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+          );
+          setCartCount(totalItems);
+        } else {
+          const storedCart = localStorage.getItem("cart");
+          if (storedCart) {
+            const cartData = JSON.parse(storedCart);
+            const total = cartData.reduce(
+              (sum, item) => sum + item.quantity,
+              0
+            );
+            setCartCount(total);
+          } else {
+            setCartCount(0);
+          }
+        }
+      } catch (err) {
+        console.error("Cart error:", err.message);
+        setCartCount(0);
+      }
+    };
+
+    fetchCart();
+  }, [user]);
 
   return (
     <nav
@@ -69,28 +101,27 @@ export default function Navbar({
                 {path.charAt(0).toUpperCase() + path.slice(1)}
               </Link>
             ))}
-            {/* Sell Button */}
+
             <Link to="/provider/apply">
               <Button className="bg-lime-400 text-black hover:bg-lime-500 font-semibold shadow">
                 Sell on Ray Solar
               </Button>
             </Link>
 
-            {/* Right Actions */}
             <div className="flex items-center space-x-4">
               {/* Cart */}
               <Link to="/cart">
                 <Button className="relative bg-white text-green-800 hover:bg-lime-100">
                   <ShoppingCart className="h-5 w-5" />
-                  {totalItems > 0 && (
+                  {cartCount > 0 && (
                     <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-lime-400 text-xs text-black">
-                      {totalItems}
+                      {cartCount}
                     </Badge>
                   )}
                 </Button>
               </Link>
 
-              {/* Auth Section */}
+              {/* Auth */}
               {user?.email ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -126,29 +157,27 @@ export default function Navbar({
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button className="bg-white text-green-800 hover:bg-lime-100 flex items-center">
-                        <User className="h-5 w-5 mr-1" />
-                        Sign In
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-4xl">
-                      <DialogTitle className="sr-only">Sign In</DialogTitle>
-                      <DialogDescription className="sr-only">
-                        Log in to your Ray Solar account
-                      </DialogDescription>
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4 }}
-                      >
-                        <LoginForm onSignIn={handleSignIn} />
-                      </motion.div>
-                    </DialogContent>
-                  </Dialog>
-                </>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-white text-green-800 hover:bg-lime-100 flex items-center">
+                      <User className="h-5 w-5 mr-1" />
+                      Sign In
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl">
+                    <DialogTitle className="sr-only">Sign In</DialogTitle>
+                    <DialogDescription className="sr-only">
+                      Log in to your Ray Solar account
+                    </DialogDescription>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <LoginForm onSignIn={handleSignIn} />
+                    </motion.div>
+                  </DialogContent>
+                </Dialog>
               )}
             </div>
           </div>

@@ -19,13 +19,7 @@ const Solutions = () => {
             comprehensive solar lighting solutions tailored to your specific
             requirements.
           </p>
-          <Button
-            size="lg"
-            className="bg-green-600 hover:bg-green-700 text-white"
-          >
-            Get Custom Quote
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          
         </div>
       </section>
 

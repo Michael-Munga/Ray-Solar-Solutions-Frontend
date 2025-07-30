@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 
 const SolutionCard = ({ solution, index }) => {
   const IconComponent = solution.icon;
@@ -58,13 +58,7 @@ const SolutionCard = ({ solution, index }) => {
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          className="w-full group text-green-700 border-green-600 hover:bg-green-50"
-        >
-          Learn More
-          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-        </Button>
+        
       </CardContent>
     </Card>
   );

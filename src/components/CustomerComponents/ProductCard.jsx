@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -7,117 +9,151 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Zap, Timer, Shield } from "lucide-react";
+import { Zap, Timer, Shield } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { toast } from "sonner";
+import { addToCart as addToCartService } from "@/services/CartService";
+import { useState } from "react";
 
 const ProductCard = ({
+  productId,
   name,
   description,
   price,
   originalPrice,
   image,
-  rating,
-  reviewCount,
   features = [],
   isPopular,
   wattage,
   batteryLife,
   warranty,
-  onAddToCart,
 }) => {
+  const { addToCart } = useCart();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const parsedPrice = parseFloat(price ?? 0);
+  const parsedOriginalPrice = parseFloat(originalPrice ?? 0);
+  const hasDiscount = parsedOriginalPrice > parsedPrice;
+
+  const handleAddToCart = async () => {
+    if (!productId) {
+      toast.error("Missing product ID.");
+      return;
+    }
+
+    if (isNaN(parsedPrice)) {
+      toast.error("Invalid price.");
+      return;
+    }
+
+    const item = {
+      id: productId,
+      name,
+      price: parsedPrice,
+      image: image || "",
+      quantity: 1,
+    };
+
+    try {
+      setIsLoading(true);
+      await addToCartService(productId, 1); // API call
+      addToCart?.(item); // update local cart
+      toast.success(`${name} added to cart`);
+    } catch (err) {
+      const status = err.response?.status;
+      if (status === 401 || status === 403) {
+        toast.error("Please log in to add items to your cart.");
+      } else {
+        toast.error("Failed to add to cart. Try again later.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <Card className="bg-white/90 border border-amber-100 hover:shadow-xl hover:shadow-amber-400 hover:scale-[1.05] transition-all duration-300 ease-in-out flex flex-col h-full relative">
+    <Card className="bg-white/90 border border-green-200 hover:shadow-lg hover:scale-[1.015] transition-all duration-300 ease-in-out flex flex-col h-full relative">
       {isPopular && (
-        <Badge className="absolute top-3 right-3 z-10 bg-amber-500 text-white">
+        <Badge className="absolute top-3 right-3 z-10 bg-green-600 text-white">
           Popular
         </Badge>
       )}
 
-      {/* Image */}
       <CardHeader className="pb-0">
-        <div className="relative overflow-hidden rounded-lg h-48">
+        <div className="relative overflow-hidden rounded-lg h-48 group">
           <img
-            src={image}
+            src={image || "/placeholder.jpg"}
             alt={name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
           />
         </div>
       </CardHeader>
 
-      {/* Content */}
       <CardContent className="p-5 flex flex-col flex-grow">
-        {/* Title + Rating */}
-        <div className="flex items-start justify-between mb-2">
-          <CardTitle className="text-lg font-bold text-gray-800 leading-snug">
-            {name}
-          </CardTitle>
-          <div className="flex items-center space-x-1">
-            <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-            <span className="text-sm text-gray-500">
-              {rating} ({reviewCount})
-            </span>
-          </div>
-        </div>
+        <CardTitle className="text-lg font-bold text-gray-800 mb-2">
+          {name}
+        </CardTitle>
 
-        {/* Description */}
         <CardDescription className="text-sm text-gray-600 mb-3 line-clamp-2">
           {description}
         </CardDescription>
 
-        {/* Quick Specs */}
-        <div className="grid grid-cols-3 gap-2 mb-3 text-xs text-gray-500">
+        <div className="grid grid-cols-3 gap-2 mb-3 text-xs text-gray-600">
           {wattage && (
             <div className="flex items-center gap-1">
-              <Zap className="h-3 w-3 text-amber-500" />
+              <Zap className="h-3 w-3 text-green-600" />
               <span>{wattage}</span>
             </div>
           )}
           {batteryLife && (
             <div className="flex items-center gap-1">
-              <Timer className="h-3 w-3 text-amber-500" />
+              <Timer className="h-3 w-3 text-green-600" />
               <span>{batteryLife}</span>
             </div>
           )}
           {warranty && (
             <div className="flex items-center gap-1">
-              <Shield className="h-3 w-3 text-amber-500" />
+              <Shield className="h-3 w-3 text-green-600" />
               <span>{warranty}</span>
             </div>
           )}
         </div>
 
-        {/* Features */}
-        <div className="flex flex-wrap gap-1 mb-4">
-          {features.map((feature, i) => (
-            <Badge key={i} variant="secondary" className="text-xs">
-              {feature}
-            </Badge>
-          ))}
-        </div>
+        {features.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {features.map((feature, i) => (
+              <Badge key={i} variant="secondary" className="text-xs">
+                {feature}
+              </Badge>
+            ))}
+          </div>
+        )}
 
-        {/* Price */}
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-amber-600">${price}</span>
-          {originalPrice && (
+        <div className="flex items-baseline gap-2 mt-auto">
+          <span className="text-2xl font-bold text-green-700">
+            ${parsedPrice.toFixed(2)}
+          </span>
+          {hasDiscount && (
             <>
               <span className="text-lg text-gray-400 line-through">
-                ${originalPrice}
+                ${parsedOriginalPrice.toFixed(2)}
               </span>
               <Badge variant="destructive" className="text-xs">
-                Save ${originalPrice - price}
+                Save ${(parsedOriginalPrice - parsedPrice).toFixed(2)}
               </Badge>
             </>
           )}
         </div>
       </CardContent>
 
-      {/* Footer */}
-      <CardFooter className="pt-0 mt-auto">
+      <CardFooter className="pt-0">
         <button
-          className="w-full bg-amber-500 text-white py-2 rounded-md hover:bg-amber-600 transition-colors duration-300"
-          onClick={onAddToCart}
+          className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors duration-300"
+          onClick={handleAddToCart}
+          disabled={isLoading}
           aria-label={`Add ${name} to cart`}
         >
-          Add to Cart
+          {isLoading ? "Adding..." : "Add to Cart"}
         </button>
       </CardFooter>
     </Card>

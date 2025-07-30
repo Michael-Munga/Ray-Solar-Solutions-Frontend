@@ -20,9 +20,7 @@ export default function StatsSection() {
         viewport={{ once: true }}
         className="mb-16 text-center"
       >
-        <h2 className="bg-gradient-to-r from-green-600 via-lime-500 to-green-400 bg-clip-text text-4xl font-bold text-transparent">
-          Our Impact in Numbers
-        </h2>
+        <h2 className="text-4xl font-bold text-black">Our Impact In Numbers</h2>
         <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
           A glimpse into the progress we’ve made on our journey toward a cleaner
           future.
