@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
- provider-dashboard
+ 
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {},
