@@ -11,7 +11,16 @@ const Products = () => {
   useEffect(() => {
     axios
       .get("/api/products")
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setProducts(res.data);
+        } else if (Array.isArray(res.data.products)) {
+          setProducts(res.data.products);
+        } else {
+          console.warn("Unexpected products data format:", res.data);
+          setProducts([]);
+        }
+      })
       .catch((err) => {
         console.error("Failed to fetch products:", err.message || err);
       });
