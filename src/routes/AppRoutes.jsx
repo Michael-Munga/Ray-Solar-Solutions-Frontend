@@ -11,12 +11,13 @@ import ProductModeration from '../pages/admin/ProductModeration';
 import ProviderApproval from '../pages/admin/ProviderApproval';
 import UserManagement from '../pages/admin/UserManagement';
 import Analytics from '../pages/admin/Analytics';
+import providerDashboard from '../pages/provider/providerDashboard';
 
 function AppRoutes() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Customer />} />
+        <Route path="*/" element={<providerDashboard/>} />
         
         {/* All admin-related routes are nested under AdminLayout */}
         <Route path="/admin" element={<AdminLayout />}>
@@ -31,7 +32,7 @@ function AppRoutes() {
         </Route>
       
         {/* Fallback route in case of unknown URL */}
-        <Route path="*" element={<Dashboard />} />
+        <Route path="*" element={<Dashboard />}/>
       </Route>
     </Routes>
   );
