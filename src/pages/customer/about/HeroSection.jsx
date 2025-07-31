@@ -19,15 +19,6 @@ export default function HeroSection() {
               technology, helping thousands reduce their carbon footprint while
               saving on energy.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg">
-                Our Story
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline">
-                Contact Us
-              </Button>
-            </div>
           </div>
 
           {/* Right Image */}

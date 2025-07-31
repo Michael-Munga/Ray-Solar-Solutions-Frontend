@@ -7,10 +7,15 @@ import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
 
-import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
+// import ContactUs from "@/pages/customer/contact/ContactUs"
 
 import ContactUs from "@/pages/customer/contact/ContactUs";
+import CustomerDashboard from "@/components/CustomerComponents/CustomerDashboard";
+import CartPage from "@/pages/customer/CartPage";
 
+
+import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
+// import ProviderDashboard from "@/pages/provider/ProviderDashboard";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -21,12 +26,10 @@ import ProviderApproval from "../pages/admin/ProviderApproval";
 import UserManagement from "../pages/admin/UserManagement";
 import Analytics from "../pages/admin/Analytics";
 
-
-// import ProviderDashboard from "../pages/provider/ProviderDashboard";
-
 function AppRoutes({ user, signOut, handleSignIn }) {
   return (
     <Routes>
+      {/* Public + Customer Layout */}
       <Route
         element={
           <Layout user={user} signOut={signOut} handleSignIn={handleSignIn} />
@@ -37,11 +40,15 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/products" element={<Products />} />
-      </Route>
-      <Route>
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/provider/apply" element={<ProviderApplicationForm />} />
+
+      
+        <Route path="/customer/dashboard" element={<CustomerDashboard />} />
       </Route>
 
+
+      {/* Admin Routes */}
       {user?.role === "admin" ? (
         <Route path="/admin" element={<AdminLayout signOut={signOut} />}>
           <Route index element={<Dashboard />} />
@@ -57,13 +64,17 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/admin/*" element={<Navigate to="/" replace />} />
       )}
 
-      {/* {user?.role === "provider" ? (
-        <Route path="/provider" element={<ProviderDashboard />} />
+      {/* Uncomment when you have provider dashboard */}
+      {/* 
+      {user?.role === "provider" ? (
+        <Route path="/provider/dashboard" element={<ProviderDashboard />} />
       ) : (
-        <Route path="/provider" element={<Navigate to="/" replace />} />
-      )}
+        <Route path="/provider/*" element={<Navigate to="/" replace />} />
+      )} 
+      */}
 
-      <Route path="*" element={<Navigate to="/" replace />} /> */}
+      {/* Catch all */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

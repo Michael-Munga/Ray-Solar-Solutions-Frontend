@@ -3,12 +3,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
+// import { Button } from "../ui/button";
+// import { ArrowRight } from "lucide-react";
 
 export default function SolarKitsCard({ image, type, description }) {
   return (
@@ -40,7 +40,7 @@ export default function SolarKitsCard({ image, type, description }) {
         </CardHeader>
 
         {/* button */}
-        <CardFooter className="px-6 pb-6 pt-0">
+        {/* <CardFooter className="px-6 pb-6 pt-0">
           <Button
             className="flex items-center text-white font-medium h-auto px-4 py-2 rounded-md shadow-none transition-all duration-300 group"
             style={{
@@ -57,7 +57,7 @@ export default function SolarKitsCard({ image, type, description }) {
             View Products
             <ArrowRight className="ml-1 h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );

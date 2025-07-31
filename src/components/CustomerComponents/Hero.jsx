@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Leaf, Sun, Users } from "lucide-react";
 import backgroundImage from "../../assets/upscalemedia-transformed.jpg";
@@ -8,6 +9,8 @@ import { useUser } from "@/contexts/UserContext";
 const UNSPLASH_ACCESS_KEY = "Fl_a6WNvP2m2GEpPf_dXkR2I6mNoO22NqACa4VWqQSw";
 
 const Hero = () => {
+  const navigate = useNavigate(); // 
+
   const [showImages, setShowImages] = useState(false);
   const [query, setQuery] = useState("solar panels");
   const [images, setImages] = useState([]);
@@ -15,7 +18,6 @@ const Hero = () => {
   const [error, setError] = useState(null);
 
   const { addProduct } = useProducts();
-
   const user = useUser();
   const isAdmin = user?.role === "admin";
 
@@ -29,14 +31,13 @@ const Hero = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.results && data.results.length > 0) {
+        if (data?.results?.length > 0) {
           const formattedImages = data.results.map((img) => ({
             id: img.id,
             url: img.urls.small,
             description: img.alt_description,
           }));
           setImages(formattedImages);
-          setError(null);
         } else {
           setImages([]);
           setError("No images found for this search.");
@@ -57,8 +58,11 @@ const Hero = () => {
     }
     const newProduct = {
       id: img.id,
-      name: img.description ? img.description.charAt(0).toUpperCase() + img.description.slice(1) : "New Solar Product",
-      description: img.description || "A solar product added from image selection.",
+      name: img.description
+        ? img.description.charAt(0).toUpperCase() + img.description.slice(1)
+        : "New Solar Product",
+      description:
+        img.description || "A solar product added from image selection.",
       price: 99,
       image: img.url,
       rating: 4.5,
@@ -99,7 +103,8 @@ const Hero = () => {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+                backgroundImage:
+                  "linear-gradient(to right, #febc23 0%, #febc23 100%)",
               }}
             >
               One Roof at a Time
@@ -115,36 +120,36 @@ const Hero = () => {
 
           {/* Buttons */}
           <div className="flex flex-wrap gap-4 pt-2">
-            {/* Explore Products */}
+            {/* Navigate to Products */}
             <Button
               size="lg"
               className="text-white px-6 py-3 text-base font-semibold shadow-md group"
               style={{
-                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+                backgroundImage:
+                  "linear-gradient(to right, #febc23 0%, #febc23 100%)",
               }}
-              onClick={() => {
-                setShowImages(true);
-                fetchImages(query);
-              }}
+              onClick={() => navigate("/products")} 
             >
               Explore Products
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
 
-            {/* Contact Us */}
+            {/* Navigate to Contact */}
             <Button
               size="lg"
               className="text-white px-6 py-3 text-base font-semibold flex items-center"
               style={{
-                backgroundImage: "linear-gradient(to right, #0a9586 0%, #0a9586 100%)",
+                backgroundImage:
+                  "linear-gradient(to right, #0a9586 0%, #0a9586 100%)",
               }}
+              onClick={() => navigate("/contact")} 
             >
               <Phone className="h-5 w-5 mr-2" />
               Contact Us
             </Button>
           </div>
 
-          {/* Stats Section */}
+          {/* Stats */}
           <div className="grid grid-cols-3 gap-6 pt-10 border-t border-white/20 mt-6">
             <div className="text-center">
               <div className="flex items-center justify-center mb-1">
@@ -232,15 +237,21 @@ const Hero = () => {
                 <p className="text-red-400 text-center">{error}</p>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {images.map((img) => (
-                      <img
-                        key={img.id}
-                        src={img.url}
-                        alt={img.description || "solar product"}
-                        className={`rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg ${isAdmin ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
-                        onClick={isAdmin ? () => handleAddProduct(img) : undefined}
-                      />
-                    ))}
+                  {images.map((img) => (
+                    <img
+                      key={img.id}
+                      src={img.url}
+                      alt={img.description || "solar product"}
+                      className={`rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg ${
+                        isAdmin
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
+                      onClick={
+                        isAdmin ? () => handleAddProduct(img) : undefined
+                      }
+                    />
+                  ))}
                 </div>
               )}
             </div>
@@ -252,5 +263,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-

@@ -35,9 +35,7 @@ export default function TimelineSection() {
         viewport={{ once: true }}
         className="mb-16 text-center"
       >
-        <h2 className="bg-gradient-to-r from-green-600 via-lime-500 to-green-400 bg-clip-text text-4xl font-bold text-transparent">
-          Our Journey
-        </h2>
+        <h2 className="text-4xl font-bold text-black">Our Journey</h2>
         <p className="text-muted-foreground mt-4 text-lg max-w-2xl mx-auto">
           Key milestones in our mission to transform outdoor lighting.
         </p>
