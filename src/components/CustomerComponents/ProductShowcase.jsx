@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "@/components/CustomerComponents/ProductCard";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
@@ -6,6 +7,7 @@ import { useProducts } from "@/contexts/ProductsContext";
 
 const ProductShowcase = () => {
   const { products } = useProducts();
+  const navigate = useNavigate();
 
   return (
     <section className="py-20 bg-white">
@@ -47,6 +49,7 @@ const ProductShowcase = () => {
             onMouseLeave={(e) =>
               (e.currentTarget.style.backgroundColor = "#0a9586")
             }
+            onClick={() => navigate("/products")}
           >
             View All Products
             <ArrowRight className="ml-2 h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1" />
@@ -54,11 +57,7 @@ const ProductShowcase = () => {
         </div>
       </div>
     </section>
-
   );
 };
 
 export default ProductShowcase;
-
-
-
