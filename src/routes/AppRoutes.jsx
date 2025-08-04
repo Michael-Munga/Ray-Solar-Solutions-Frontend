@@ -6,6 +6,8 @@ import Customer from "@/components/CustomerComponents/Customer";
 import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
+import Checkout from "@/pages/customer/checkout/Checkout";
+import Orders from "@/pages/customer/Orders";
 
 // import ContactUs from "@/pages/customer/contact/ContactUs"
 
@@ -15,7 +17,12 @@ import CartPage from "@/pages/customer/CartPage";
 
 
 import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
-// import ProviderDashboard from "@/pages/provider/ProviderDashboard";
+import ProviderDashboard from "@/pages/provider/Dashboard";
+import ProviderProfile from "@/pages/provider/Profile";
+import ProviderProductManagement from "@/pages/provider/ProductManagement";
+import ProviderAnalytics from "@/pages/provider/Analytics.jsx";
+import ProviderOrders from "@/pages/provider/Orders";
+import ProviderSupportInbox from "@/pages/provider/SupportInbox";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -41,6 +48,8 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="/provider/apply" element={<ProviderApplicationForm />} />
 
       
@@ -64,14 +73,20 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/admin/*" element={<Navigate to="/" replace />} />
       )}
 
-      {/* Uncomment when you have provider dashboard */}
-      {/* 
-      {user?.role === "provider" ? (
-        <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+      {/* Provider Routes */}
+      {user?.role === "provider" || user?.role === "admin" ? (
+        <Route path="/provider">
+          <Route index element={<ProviderDashboard />} />
+          <Route path="dashboard" element={<ProviderDashboard />} />
+          <Route path="profile" element={<ProviderProfile />} />
+          <Route path="products" element={<ProviderProductManagement />} />
+          <Route path="analytics" element={<ProviderAnalytics />} />
+          <Route path="orders" element={<ProviderOrders />} />
+          <Route path="support" element={<ProviderSupportInbox />} />
+        </Route>
       ) : (
         <Route path="/provider/*" element={<Navigate to="/" replace />} />
-      )} 
-      */}
+      )}
 
       {/* Catch all */}
       <Route path="*" element={<Navigate to="/" replace />} />
@@ -80,3 +95,4 @@ function AppRoutes({ user, signOut, handleSignIn }) {
 }
 
 export default AppRoutes;
+

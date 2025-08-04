@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import {
   LineChart,
   Line,
@@ -125,21 +125,21 @@ export default function Analytics() {
   const [modalStatus, setModalStatus] = useState(null);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5000/analytics/users')
+    api.get('/analytics/users')
       .then((res) => setUserGrowthData(res.data))
       .catch((err) => console.error('User data error:', err));
 
-    axios.get('http://127.0.0.1:5000/analytics/products/status')
+    api.get('/analytics/products/status')
       .then((res) => setProductStatusData(res.data))
       .catch((err) => console.error('Product status error:', err));
 
-    axios.get('http://127.0.0.1:5000/analytics/tickets/status')
+    api.get('/analytics/tickets/status')
       .then((res) => setTicketStatusData(res.data))
       .catch((err) => console.error('Ticket status error:', err));
   }, []);
 
   const handleSliceClick = (status) => {
-    axios.get(`http://127.0.0.1:5000/analytics/tickets/${status.toLowerCase()}`)
+    api.get(`/analytics/tickets/${status.toLowerCase()}`)
       .then((res) => {
         setTicketDetails((prev) => ({ ...prev, [status]: res.data }));
         setModalStatus(status);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import {
   getCart,
@@ -8,6 +9,7 @@ import {
 } from "@/services/CartService";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -59,6 +61,11 @@ const CartPage = () => {
     } catch (err) {
       console.error("Delete failed:", err);
     }
+  };
+
+  const handleCheckout = () => {
+    // Navigate to checkout page
+    navigate('/checkout');
   };
 
   const totalPrice = cartItems.reduce((acc, item) => {
@@ -142,7 +149,10 @@ const CartPage = () => {
         <p className="text-2xl font-bold text-green-900">
           Total: ${totalPrice.toFixed(2)}
         </p>
-        <button className="mt-4 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-green-900 rounded shadow font-semibold transition">
+        <button 
+          onClick={handleCheckout}
+          className="mt-4 px-6 py-3 bg-lime-500 hover:bg-lime-600 text-green-900 rounded shadow font-semibold transition"
+        >
           Proceed to Checkout
         </button>
       </div>
