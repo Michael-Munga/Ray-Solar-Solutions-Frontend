@@ -7,6 +7,7 @@ import Dashboard from '../pages/customer/Dashboard';
 import Cart from '../pages/customer/Cart';
 import Profile from '../pages/customer/Profile';
 import Orders from '../pages/customer/Orders';
+import Transactions from '../pages/customer/Transactions';
 import ProductDetails from '../pages/customer/ProductDetails';
 import Auth from '../pages/customer/Auth';
 import NotFound from '../pages/customer/NotfFound';
@@ -22,6 +23,7 @@ const CustomerRoutes = () => {
         <Route path="cart" element={<Cart />} />
         <Route path="profile" element={<Profile />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="transactions" element={<Transactions />} />
         <Route path="auth" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
       </Route>

@@ -87,9 +87,7 @@ export default function AboutUs1() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mx-auto mb-16 max-w-2xl text-center"
         >
-          <h1 className="bg-gradient-to-r from-green-500 via-lime-500 to-green-600 bg-clip-text text-5xl font-bold text-transparent sm:text-6xl">
-            {aboutData.title}
-          </h1>
+          <h1 className="text-4xl font-bold text-black ">{aboutData.title}</h1>
           <p className="text-muted-foreground mt-6 text-xl">
             {aboutData.subtitle}
           </p>
@@ -166,9 +164,8 @@ export default function AboutUs1() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="mb-12 text-center"
           >
-            <h2 className="bg-gradient-to-r from-green-600 via-lime-500 to-green-400 bg-clip-text text-4xl font-bold text-transparent">
-              Our Core Values
-            </h2>
+            <h2 className="text-4xl font-bold text-black">Our Core Values</h2>
+
             <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
               The values that guide our mission to create a cleaner, brighter
               future.

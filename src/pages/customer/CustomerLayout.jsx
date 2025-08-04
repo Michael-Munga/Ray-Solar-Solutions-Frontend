@@ -43,6 +43,16 @@ const CustomerLayout = () => {
               Orders
             </NavLink>
             <NavLink
+              to="/customer/transactions"
+              className={({ isActive }) =>
+                `block px-6 py-3 text-gray-700 hover:bg-green-100 ${
+                  isActive ? 'bg-green-200 font-semibold' : ''
+                }`
+              }
+            >
+              Transactions
+            </NavLink>
+            <NavLink
               to="/customer/cart"
               className={({ isActive }) =>
                 `block px-6 py-3 text-gray-700 hover:bg-green-100 ${

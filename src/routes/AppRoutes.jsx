@@ -6,11 +6,23 @@ import Customer from "@/components/CustomerComponents/Customer";
 import AboutPage from "@/pages/customer/about/AboutPage";
 import Solutions from "@/pages/customer/solutions/Solutions";
 import Products from "@/pages/customer/products/Products";
+import Checkout from "@/pages/customer/checkout/Checkout";
+import Orders from "@/pages/customer/Orders";
 
-import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
+// import ContactUs from "@/pages/customer/contact/ContactUs"
 
 import ContactUs from "@/pages/customer/contact/ContactUs";
+import CustomerDashboard from "@/components/CustomerComponents/CustomerDashboard";
+import CartPage from "@/pages/customer/CartPage";
 
+
+import ProviderApplicationForm from "@/pages/provider/ProviderApplicationForm";
+import ProviderDashboard from "@/pages/provider/Dashboard";
+import ProviderProfile from "@/pages/provider/Profile";
+import ProviderProductManagement from "@/pages/provider/ProductManagement";
+import ProviderAnalytics from "@/pages/provider/Analytics.jsx";
+import ProviderOrders from "@/pages/provider/Orders";
+import ProviderSupportInbox from "@/pages/provider/SupportInbox";
 
 import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -21,12 +33,10 @@ import ProviderApproval from "../pages/admin/ProviderApproval";
 import UserManagement from "../pages/admin/UserManagement";
 import Analytics from "../pages/admin/Analytics";
 
-
-// import ProviderDashboard from "../pages/provider/ProviderDashboard";
-
 function AppRoutes({ user, signOut, handleSignIn }) {
   return (
     <Routes>
+      {/* Public + Customer Layout */}
       <Route
         element={
           <Layout user={user} signOut={signOut} handleSignIn={handleSignIn} />
@@ -37,11 +47,17 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/products" element={<Products />} />
-      </Route>
-      <Route>
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="/provider/apply" element={<ProviderApplicationForm />} />
+
+      
+        <Route path="/customer/dashboard" element={<CustomerDashboard />} />
       </Route>
 
+
+      {/* Admin Routes */}
       {user?.role === "admin" ? (
         <Route path="/admin" element={<AdminLayout signOut={signOut} />}>
           <Route index element={<Dashboard />} />
@@ -57,15 +73,26 @@ function AppRoutes({ user, signOut, handleSignIn }) {
         <Route path="/admin/*" element={<Navigate to="/" replace />} />
       )}
 
-      {/* {user?.role === "provider" ? (
-        <Route path="/provider" element={<ProviderDashboard />} />
+      {/* Provider Routes */}
+      {user?.role === "provider" || user?.role === "admin" ? (
+        <Route path="/provider">
+          <Route index element={<ProviderDashboard />} />
+          <Route path="dashboard" element={<ProviderDashboard />} />
+          <Route path="profile" element={<ProviderProfile />} />
+          <Route path="products" element={<ProviderProductManagement />} />
+          <Route path="analytics" element={<ProviderAnalytics />} />
+          <Route path="orders" element={<ProviderOrders />} />
+          <Route path="support" element={<ProviderSupportInbox />} />
+        </Route>
       ) : (
-        <Route path="/provider" element={<Navigate to="/" replace />} />
+        <Route path="/provider/*" element={<Navigate to="/" replace />} />
       )}
 
-      <Route path="*" element={<Navigate to="/" replace />} /> */}
+      {/* Catch all */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
 
 export default AppRoutes;
+

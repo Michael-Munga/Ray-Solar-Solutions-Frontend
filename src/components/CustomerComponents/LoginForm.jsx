@@ -46,51 +46,63 @@ export default function LoginForm({ onSignIn }) {
     toast.dismiss();
   };
 
-  const handleSubmit = async () => {
-    if (showCreateAccount) {
-      if (password !== confirmPassword) {
-        toast.error("Passwords do not match.");
-        return;
-      }
+ const handleSubmit = async () => {
+   if (showCreateAccount) {
+     if (password !== confirmPassword) {
+       toast.error("Passwords do not match.");
+       return;
+     }
 
-      try {
-        const res = await axios.post("/auth/register", {
-          email,
-          password,
-          first_name: firstName,
-          last_name: lastName,
-        });
+     try {
+       const res = await axios.post("/auth/register", {
+         email,
+         password,
+         first_name: firstName,
+         last_name: lastName,
+       });
 
-        toast.success("Account created successfully!");
-        setShowCreateAccount(false);
-        const { user } = res.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        if (onSignIn) onSignIn(user);
-        navigate("/");
-      } catch (err) {
-        toast.error(err?.response?.data?.error || "Registration failed.");
-      }
+       toast.success("Account created successfully!");
+       setShowCreateAccount(false);
 
-      return;
-    }
+       const { user } = res.data;
+       localStorage.setItem("user", JSON.stringify(user));
+       if (onSignIn) onSignIn(user);
 
-    try {
-      const res = await axios.post("/auth/login", { email, password });
-      const { access_token, user } = res.data;
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("user", JSON.stringify(user));
-      toast.success("Signed in successfully!");
-      if (onSignIn) onSignIn(user);
+       // Redirect based on role
+       if (user?.role === "admin") return navigate("/admin/dashboard");
+       if (user?.role === "provider") return navigate("/provider/dashboard");
+       if (user?.role === "customer") return navigate("/products");
 
-      const role = user.user_type?.name || user.user_type_name;
+       // fallback
+       navigate("/");
+     } catch (err) {
+       toast.error(err?.response?.data?.error || "Registration failed.");
+     }
 
-      if (role === "admin") navigate("/admin");
-      else if (role === "provider") navigate("/provider");
-      else navigate("/customer");
-    } catch (err) {
-      toast.error(err?.response?.data?.error || "Invalid credentials.");
-    }
-  };
+     return;
+   }
+
+   try {
+     const res = await axios.post("/auth/login", { email, password });
+     const { access_token, user } = res.data;
+
+     localStorage.setItem("access_token", access_token);
+     localStorage.setItem("user", JSON.stringify(user));
+     toast.success("Signed in successfully!");
+     if (onSignIn) onSignIn(user);
+
+     // Redirect based on role
+     if (user?.role === "admin") return navigate("/admin/dashboard");
+     if (user?.role === "provider") return navigate("/provider/dashboard");
+     if (user?.role === "customer") return navigate("/products");
+
+     // fallback
+     navigate("/");
+   } catch (err) {
+     toast.error(err?.response?.data?.error || "Invalid credentials.");
+   }
+ };
+
 
   const isCreateDisabled =
     showCreateAccount &&

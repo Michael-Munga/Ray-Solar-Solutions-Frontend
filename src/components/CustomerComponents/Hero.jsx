@@ -1,15 +1,89 @@
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Leaf, Sun, Users } from "lucide-react";
+import backgroundImage from "../../assets/upscalemedia-transformed.jpg";
+import { useProducts } from "@/contexts/ProductsContext";
+import { useUser } from "@/contexts/UserContext";
+
+const UNSPLASH_ACCESS_KEY = "Fl_a6WNvP2m2GEpPf_dXkR2I6mNoO22NqACa4VWqQSw";
 
 const Hero = () => {
+  const navigate = useNavigate(); // 
+
+  const [showImages, setShowImages] = useState(false);
+  const [query, setQuery] = useState("solar panels");
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const { addProduct } = useProducts();
+  const user = useUser();
+  const isAdmin = user?.role === "admin";
+
+  const fetchImages = () => {
+    setLoading(true);
+    setError(null);
+    fetch(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+        query
+      )}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=9`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.results?.length > 0) {
+          const formattedImages = data.results.map((img) => ({
+            id: img.id,
+            url: img.urls.small,
+            description: img.alt_description,
+          }));
+          setImages(formattedImages);
+        } else {
+          setImages([]);
+          setError("No images found for this search.");
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setImages([]);
+        setLoading(false);
+        setError("Failed to fetch images. Please try again.");
+      });
+  };
+
+  const handleAddProduct = (img) => {
+    if (!isAdmin) {
+      alert("Only admins can add products.");
+      return;
+    }
+    const newProduct = {
+      id: img.id,
+      name: img.description
+        ? img.description.charAt(0).toUpperCase() + img.description.slice(1)
+        : "New Solar Product",
+      description:
+        img.description || "A solar product added from image selection.",
+      price: 99,
+      image: img.url,
+      rating: 4.5,
+      reviewCount: 0,
+      features: ["Feature 1", "Feature 2"],
+      wattage: "10W LED",
+      batteryLife: "10 hours",
+      warranty: "1 year",
+    };
+    addProduct(newProduct);
+    alert(`Product "${newProduct.name}" added!`);
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center bg-black text-white overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center bg-black text-white overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="src/assets/upscalemedia-transformed.jpg"
+          src={backgroundImage}
           alt="Rooftop solar panels during sunset"
-          className="w-full h-full object-cover opacity-85"
+          className="w-full h-full object-cover opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
       </div>
@@ -29,7 +103,8 @@ const Hero = () => {
             <span
               className="bg-clip-text text-transparent"
               style={{
-                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+                backgroundImage:
+                  "linear-gradient(to right, #febc23 0%, #febc23 100%)",
               }}
             >
               One Roof at a Time
@@ -45,32 +120,36 @@ const Hero = () => {
 
           {/* Buttons */}
           <div className="flex flex-wrap gap-4 pt-2">
-            {/* Explore Products */}
+            {/* Navigate to Products */}
             <Button
               size="lg"
               className="text-white px-6 py-3 text-base font-semibold shadow-md group"
               style={{
-                backgroundImage: "linear-gradient(to right, #febc23 0%, #febc23 100%)",
+                backgroundImage:
+                  "linear-gradient(to right, #febc23 0%, #febc23 100%)",
               }}
+              onClick={() => navigate("/products")} 
             >
               Explore Products
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
 
-            {/* Contact Us */}
+            {/* Navigate to Contact */}
             <Button
               size="lg"
               className="text-white px-6 py-3 text-base font-semibold flex items-center"
               style={{
-                backgroundImage: "linear-gradient(to right, #0a9586 0%, #0a9586 100%)",
+                backgroundImage:
+                  "linear-gradient(to right, #0a9586 0%, #0a9586 100%)",
               }}
+              onClick={() => navigate("/contact")} 
             >
               <Phone className="h-5 w-5 mr-2" />
               Contact Us
             </Button>
           </div>
 
-          {/* Stats Section */}
+          {/* Stats */}
           <div className="grid grid-cols-3 gap-6 pt-10 border-t border-white/20 mt-6">
             <div className="text-center">
               <div className="flex items-center justify-center mb-1">
@@ -94,6 +173,89 @@ const Hero = () => {
               <p className="text-sm text-white/80">Clean Energy</p>
             </div>
           </div>
+
+          {/* Image Search Section */}
+          {showImages && (
+            <div className="mt-10 space-y-4 bg-white/5 p-6 rounded-xl shadow-inner backdrop-blur-sm">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  fetchImages(query);
+                }}
+                className="flex gap-2"
+              >
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search solar images..."
+                  className="flex-1 px-4 py-2 rounded bg-white text-black focus:outline-yellow-400 focus:ring-2 focus:ring-yellow-400 transition"
+                />
+                <Button
+                  type="submit"
+                  className="bg-yellow-500 text-white font-semibold px-4 py-2 rounded hover:bg-yellow-600 transition"
+                >
+                  Search
+                </Button>
+                <Button
+                  type="button"
+                  className="bg-gray-500 text-white font-semibold px-4 py-2 rounded hover:bg-gray-600 transition"
+                  onClick={() => {
+                    setQuery("");
+                    setImages([]);
+                    setError(null);
+                  }}
+                >
+                  Clear
+                </Button>
+              </form>
+
+              {loading ? (
+                <div className="flex justify-center py-10">
+                  <svg
+                    className="animate-spin h-10 w-10 text-yellow-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                </div>
+              ) : error ? (
+                <p className="text-red-400 text-center">{error}</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {images.map((img) => (
+                    <img
+                      key={img.id}
+                      src={img.url}
+                      alt={img.description || "solar product"}
+                      className={`rounded-lg w-full h-48 object-cover shadow transform transition-transform duration-300 hover:scale-105 hover:shadow-lg ${
+                        isAdmin
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
+                      onClick={
+                        isAdmin ? () => handleAddProduct(img) : undefined
+                      }
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -101,4 +263,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

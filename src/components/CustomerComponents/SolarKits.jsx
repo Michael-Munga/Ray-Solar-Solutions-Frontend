@@ -13,7 +13,7 @@ export default function SolarKits() {
     {
       type: "On Grid",
       description:
-        "Grid-tied solar systems are interconnected with the existing electrical utility grid. They allow property owners to use solar-generated electricity, with any excess power being fed back into the grid, often under net metering arrangements. Grid power acts as a continuous backup.",
+        "Grid-tied solar systems are interconnected with the existing electrical utility grid. They allow property owners to use solar-generated electricity, with any excess power being fed back into the grid, often under net metering arrangements. Grid power acts as a continuous backup and works conviniently.",
       image:
         "https://i.pinimg.com/736x/67/c8/62/67c862cf6d0289ac7215d606aa40cba5.jpg",
     },
